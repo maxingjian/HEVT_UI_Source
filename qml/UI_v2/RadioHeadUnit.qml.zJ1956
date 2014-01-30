@@ -1,0 +1,43 @@
+import QtQuick 1.0
+import Qt 4.7
+import QtQuick 1.1
+Rectangle {
+    id: radioHeadUnit
+    width: 1024
+    height: 615
+    color: "dimgray"
+    SequentialAnimation on color {
+        loops: Animation.Infinite
+        ColorAnimation { from: "linen"; to: "black"; duration: 6000 }
+        ColorAnimation { from: "black"; to: "linen"; duration: 6000 }
+    }
+    /* Define and Initialize Variable used in Radio processes */
+    property string busMessage                                                      // CAN message carrier for Radio Bus
+    property string radioPowerTimerState:"off"                                      // Holds Radio Power button status (on / off) *Default off
+    property string radioPowerMessage: "0x244 0x07 0xAE 0X01 0X10 0X0 0X0 0X0 0X0"  // CAN Message for radio ON / OFF
+    property string keypressed                                                      // Stores name of button most recently asserted (prints to terminal for debugging)
+    property int volumeLevel: 0x40                                                  // Control byte for Volume level  initialized @ 25%
+    property int fadeLevel: 0x80                                                    // Control byte for Fade level  *Default 0
+    property int balanceLevel: 0x80                                                 // Control byte for Balance level * Default 0
+    property int bassLevel: 0x4D                                                    // Control byte for Bass level  *Default 30%
+    property int midLevel: 0x4D                                                     // Control byte for Mid tone level *Default 30%
+    property int trebleLevel: 0x4D                                                  // Control byte for Treble level *Default 30%
+    property string volumeState                                                     // Timer trigger variable for volume up / down
+    property string fadeState                                                       // Timer trigger variable for volume up / down
+    property string balanceState                                                    // Timer trigger variable for volume up / down
+    property string bassState                                                       // Timer trigger variable for volume up / down
+    property string midState                                                        // Timer trigger variable for volume up / down
+    property string trebleState                                                     // Timer trigger variable for volume up / down
+    property string bugMessage: volumeLevel
+
+    Image {
+        id: image1
+        x: 130
+        y: 108
+        source: "UIPictures/RadioPage.png"
+    }					    // Debug message transport
+    // RadioHeadUnit.testing(bugMessage)
+//creat a slider.
+//volume buttons and etc....
+    //import Qt 4.7
+}

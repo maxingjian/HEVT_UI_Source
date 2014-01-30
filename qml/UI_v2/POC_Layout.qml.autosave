@@ -1,0 +1,534 @@
+import QtQuick 1.0
+import Qt 4.7
+
+/* POC_Layout information
+    POC_Layout - This component includes the proof-of-concept ac controls and possibly radio function controlls (in the future). The Temperature controls on the
+                 left and right side both control a left and a right temperature variable. Presses as well as press-and-hold functions both work to change the
+                 temperature.
+
+    Interacts with - This component interacts with the following
+                        1) main.qml
+                        2) HomeButton.qml
+*/
+
+    Image {
+        id: poc_Layout
+        x: 0
+        y: 0
+        visible: true
+        source: "UIPictures/ProofOfConcept/AC_Controls_Layout.png"
+
+        //Variables Used in POC_Layout
+            // Right and left Temperature Text Display Variables
+                property int leftTempText
+                property int rightTempText
+            // Right and left Temperature values
+                property int leftTempValue
+                property int rightTempValue
+            // Temperature Timer State
+                property string timerState      // see Timer (id: tempTimer) for more info
+            // Rear Defrost Timer State
+                property string rearDefTimerState
+            // Front Defrost Timer State
+                property string frontDefTimerState
+
+        //Initialize Variables
+            // Initialize Temperature Value Variables to 70 Degrees F
+                leftTempValue: { leftTempValue = 70 }
+                rightTempValue: { rightTempValue = 70 }
+
+        //OnChanged settings
+            // On Temperature Change, Adjust Temperature Text and Pointer Location. 1 Degree F = 9 Degree rotation
+                onLeftTempValueChanged: { leftTempText = leftTempValue; pointerLeft.rotation = ( leftTempValue - 60 ) * -9 }
+                onRightTempValueChanged: { rightTempText = rightTempValue; pointerRight.rotation = ( rightTempValue - 60 ) * 9 }
+
+
+        Image {                     // AC Level Pointer on Left Side
+            id: pointerLeft
+            x: 65
+            y: 69
+            rotation: -90           // 70 Deg F starting value is -90 Degrees
+            source: "UIPictures/ProofOfConcept/AC_Controls_Pointer.png"
+        }
+
+        Image {                     // AC Level Pointer on Right Side
+            id: pointerRight
+            x: 737
+            y: 74
+            rotation:  90           // 70 Deg F starting value is 90 Degrees
+            source: "UIPictures/ProofOfConcept/AC_Controls_Pointer.png"
+        }
+
+        FanLevel {                  // Fan Leve Component (FanLeve.qml), controls pictures for fan increase/decrease bars
+            id: fanLevel
+            x: 424
+            y: 18
+        }
+
+
+        MouseArea {                 // Fan decrease button mouse area. Controls press/click events and effects
+            id: fanDecrease;
+            x: 324;
+            y: 11;
+            width: 85;
+            height: 75
+
+            onClicked: fanLevel.fanLevelDecrease()              //on a mouse click, decrease fan level by one
+            onPressed: {
+
+                fanDecreaseEffect.visible = true         //on a press, show button pressed effect
+                AC_Controls.FanDownStart()
+
+            }
+            onReleased: {
+
+                fanDecreaseEffect.visible = false       //on release, hide button pressed effect
+                AC_Controls.FanDownStop()
+            }
+
+            Image {                     //Image for the button pressed effect (Inner Glow)
+                id: fanDecreaseEffect;
+                x: 0
+                y: 0
+                anchors.rightMargin: 0
+                anchors.bottomMargin: 0
+                anchors.leftMargin: 0
+                anchors.topMargin: 0
+                anchors.fill: parent;
+                visible: false;
+                source: "UIPictures/ProofOfConcept/AC_ButtonEffect.png" }
+        }
+
+        MouseArea {                 // Fan increase button mouse area. Controlls press/click events and effects
+            id: fanIncrease; x: 583; y: 12; width: 84; height: 74
+
+            onClicked: fanLevel.fanLevelIncrease()              //on a mouse click, increase fan level by one
+            onPressed: {
+
+                fanIncreaseEffect.visible = true         //on a press, show button pressed effect
+                AC_Controls.FanUpStart()
+
+            }
+            onReleased: {
+
+                fanIncreaseEffect.visible = false       //on release, hide button pressed effect
+                AC_Controls.FanUpStop()
+            }
+
+            Image {                     //Image for the button pressed effect (Inner Glow)
+                id: fanIncreaseEffect;
+                anchors.fill: parent;
+                visible: false;
+                source: "UIPictures/ProofOfConcept/AC_ButtonEffect.png" }
+        }
+
+        Timer {                     // Timer for evaluating automatic temp decrease on press and hold.
+            /*
+                                      When a cold or hot Temp button is press and held this lowers the temperature by 1 degree each step. Each step while still held
+                                      is faster to a maximum of around 200ms (starts at 500ms, decreases 60ms per step). timerState variable allows the determination
+                                      of which button is pressed, left hot/cold or right hot/cold
+                                    */
+            id: tempTimer;
+            interval: 500;
+            running: false;
+            repeat: true;
+            onTriggered:{
+
+                switch (timerState) {
+
+                case "leftCold":
+                    if ( leftTempValue > 60 ) {                     //If the left Temp Controlls Cold button is held, decrease until min value of 60
+                        leftTempValue -= 1;                         //Decrease Temperature Text by 1 degree (each step lowers by 1 degree)
+                        if (tempTimer.interval > 200) {             //Controls the speed of decrease, start slow and get faster until a max period of 200ms
+                            tempTimer.interval -= 60
+                        }
+                    } return
+
+
+                case "rightCold":                                   //If the Right Temp Controlls Cold button is held, decrease until min value of 60
+                    if ( rightTempValue > 60 ) {
+                        rightTempValue -= 1;                        //Decrease Temperature Text by 1 degree (each step lowers by 1 degree)
+                        if (tempTimer.interval > 200) {             //Controls the speed of decrease, start slow and get faster until a max period of 200ms
+                            tempTimer.interval -= 60
+                        }
+                    } return
+
+
+                case "leftHot":
+                    if ( leftTempValue < 80 ) {                     //If the Left Temp Controlls Hot button is held, decrease until min value of 60
+                        leftTempValue += 1;                         //Increase Temperature Text by 1 degree (each step raises by 1 degree)
+                        if (tempTimer.interval > 200) {             //Controls the speed of decrease, start slow and get faster until a max period of 200ms
+                            tempTimer.interval -= 60
+                        }
+                    } return
+
+                case "rightHot":
+                    if ( rightTempValue < 80 ) {                    //If the Right Temp Controlls Hot button is held, decrease until min value of 60
+                        rightTempValue += 1;                        //Increase Temperature Text by 1 degree (each step raises by 1 degree)
+                        if (tempTimer.interval > 200) {             //Controls the speed of decrease, start slow and get faster until a max period of 200ms
+                            tempTimer.interval -= 60
+                        }
+                    } return
+
+                default: break
+
+                }
+
+
+            }
+
+        }
+
+        MouseArea {                 // Temp Cold button Left side mouse area
+            id: tempBtnColdLeft
+            x: 65
+            y: 24
+            width: 189
+            height: 87
+
+            onClicked: {                                //When clicked, if temperature is not already at min value (60 F) lower by 1, update AC_Controls header file
+                if ( leftTempValue > 60 ) {
+                    leftTempValue -= 1;
+                }
+
+                AC_Controls.acTemp(leftTempValue, rightTempValue)
+
+
+            }
+            onPressed: {                                //When Pressed, start timer. If it is held timer will automate temp decrease
+                timerState: timerState = "leftCold"
+                tempTimer.running = true;
+                AC_Controls.acDownLeftStart()
+            }
+            onReleased: {                               //On Released, stop timer. Reset interval to 500ms
+                tempTimer.running = false;
+                tempTimer.interval = 500;
+                AC_Controls.acDownLeftStop()
+            }
+        }
+
+        MouseArea {                 // Temp Cold button Right side mouse area
+            id: tempBtnColdRight
+            x: 737
+            y: 24
+            width: 189
+            height: 92
+
+            onClicked: {                                //When clicked, if temperature is not already at min value (60 F) lower by 1, update AC_Controls header file
+                if ( rightTempValue > 60 ) {
+                    rightTempValue -= 1;
+                }
+
+                AC_Controls.acTemp(leftTempValue, rightTempValue)
+            }
+            onPressed: {                                //When Pressed, start timer. If it is held timer will automate temp decrease
+                timerState: timerState = "rightCold"
+                tempTimer.running = true;
+                AC_Controls.acDownRightStart()
+            }
+            onReleased: {                               //On Released, stop timer. Reset interval to 500ms
+                tempTimer.running = false;
+                tempTimer.interval = 500;
+                AC_Controls.acDownRightStop()
+            }
+        }
+
+        MouseArea {                 // Temp Hot Right side mouse area
+            id: tempBtnHotRight
+            x: 737
+            y: 224
+            width: 189
+            height: 88
+
+            onClicked: {                                //When clicked, if temperature is not already at max value (80 F) increase by 1, update AC_Controls header file
+                if ( rightTempValue < 80 ) {
+                    rightTempValue += 1;
+                }
+
+                AC_Controls.acTemp(leftTempValue, rightTempValue)
+            }
+            onPressed: {                                //When Pressed, start timer. If it is held timer will automate temp increase
+                timerState: timerState = "rightHot"
+                tempTimer.running = true;
+                AC_Controls.acUpRightStart()
+            }
+            onReleased: {                               //On Released, stop timer. Reset interval to 500ms
+                tempTimer.running = false;
+                tempTimer.interval = 500;
+                AC_Controls.acUpRightStop()
+            }
+        }
+
+        MouseArea {                 // Temp Hot Left side mouse area
+            id: tempBtnHotLeft
+            x: 65
+            y: 224
+            width: 189
+            height: 88
+
+            onClicked: {                                //When clicked, if temperature is not already at max value (80 F) increase by 1, update AC_Controls header file
+                if ( leftTempValue < 80 ) {
+                    leftTempValue += 1;
+                }
+
+                AC_Controls.acTemp(leftTempValue, rightTempValue)
+            }
+            onPressed: {                                //When Pressed, start timer. If it is held timer will automate temp increase
+                timerState: timerState = "leftHot"
+                tempTimer.running = true;
+                AC_Controls.acUpLeftStart()
+            }
+            onReleased: {                               //On Released, stop timer. Reset interval to 500ms
+                tempTimer.running = false;
+                tempTimer.interval = 500;
+                AC_Controls.acUpLeftStop()
+            }
+        }
+
+        Text {                 // Left Side Temperature Display Text
+            id: tempTextLeft
+            x: 144
+            y: 154
+            width: 29
+            height: 20
+            text: leftTempText.toString()           // converts int value leftTempText to a string value for text display
+            font.family: "Sans Serif"
+            font.bold: true
+            font.pixelSize: 22
+        }
+
+        Text {                 // Right Side Temperature Display Text
+            id: tempTextRight
+            x: 817
+            y: 154
+            width: 29
+            height: 20
+            text: rightTempText.toString()          // converts int value rightTempText to a string value for text display
+            font.family: "Sans Serif"
+            font.pixelSize: 22
+            font.bold: true
+        }
+
+        MouseArea {             // AC Button Mouse Area and Effect
+            id: acButton
+            x: 324
+            y: 164
+            width: 85
+            height: 75
+            opacity: 1
+            visible: true
+
+            Image {             // AC Button Effect Image
+                id: acButtonEffect
+                anchors.fill: parent
+                source: "UIPictures/ProofOfConcept/AC_ButtonEffect.png"
+                visible: false
+            }
+
+            onPressed: {        //When Pressed, Toggle AC On or Off
+                acButtonEffect.visible = !acButtonEffect.visible            //Toggles AC Button Effect
+                AC_Controls.acButton(acButtonEffect.visible)                //Toggles AC State with Button Effect and starts/stops CAN timer
+
+            }
+        }
+
+        MouseArea {             // Vent Button Top Mouse Area and Effect
+            id: ventButtonTop
+            x: 325
+            y: 241
+            width: 85
+            height: 75
+
+            Image {             // Vent Button Effect Image
+                id: ventButtonTopEffect
+                anchors.fill: parent
+                source: "UIPictures/ProofOfConcept/AC_ButtonEffect.png"
+                visible: false
+            }
+
+            onPressed: {        // When Pressed make only the Top Vent button active
+                ventButtonTopEffect.visible = !ventButtonTopEffect.visible;
+                ventButtonTopBottomEffect.visible = ventButtonBottomEffect.visible = false
+                AC_Controls.ventButtons("top")
+            }
+        }
+
+        MouseArea {             // Vent Button Top/Bottom split Mouse Area and Effect
+            id: ventButtonTopBottom
+            x: 410
+            y: 241
+            width: 85
+            height: 75
+
+            Image {             // Vent Button Top/Bottom split Effect Image
+                id: ventButtonTopBottomEffect
+                anchors.fill: parent
+                source: "UIPictures/ProofOfConcept/AC_ButtonEffect.png"
+                visible: false
+            }
+
+            onPressed: {        // When Pressed make only the Top Bottom Mix Vent button active
+                ventButtonTopBottomEffect.visible = !ventButtonTopBottomEffect.visible
+                ventButtonTopEffect.visible = ventButtonBottomEffect.visible = false
+                AC_Controls.ventButtons("topbottom")
+            }
+        }
+
+        MouseArea {             // Vent Button Bottom Mouse Area and Effect
+            id: ventButtonBottom
+            x: 496
+            y: 241
+            width: 85
+            height: 75
+
+            Image {             // Vent Button Bottom Effect
+                id: ventButtonBottomEffect
+                anchors.fill: parent
+                source: "UIPictures/ProofOfConcept/AC_ButtonEffect.png"
+                visible: false
+            }
+
+            onPressed: {        // When Pressed make only the Bottom Vent button active
+                ventButtonBottomEffect.visible = !ventButtonBottomEffect.visible
+                ventButtonTopEffect.visible = ventButtonTopBottomEffect.visible = false
+                AC_Controls.ventButtons("bottom")
+            }
+        }
+
+        MouseArea {             // Circulate Air Button Mouse Area and Effect
+            id: circulateAirButton
+            x: 582
+            y: 241
+            width: 85
+            height: 75
+
+            Image {             // Circulate Air Button Effect
+                id: circulateAirButtonEffect
+                anchors.fill: parent
+                source: "UIPictures/ProofOfConcept/AC_ButtonEffect.png"
+                visible: false
+            }
+
+            onPressed: {        // When Pressed make the circulate air button active
+                circulateAirButtonEffect.visible = !circulateAirButtonEffect.visible
+                AC_Controls.circulate(circulateAirButtonEffect.visible)
+            }
+        }
+
+
+        MouseArea {          // Rear Defrost Button Mouse Area and Effect
+            id: rearDefrost
+            x: 410
+            y: 164
+            width: 86
+            height: 77
+
+            Image {
+                id: rearDefrostButtonEffect
+                anchors.fill: parent
+                visible: false
+                source: "UIPictures/ProofOfConcept/AC_ButtonEffect.png"
+            }
+
+            Timer {                     // Timer limiting on/off frequency of Rear defrost. Current CAN signals require a min 3 second delay
+                /*
+                                      A 3 second delay timer starts when the rear defrost button has been pressed. The button is disabled during
+                                      this time frame. Once the delay has expired, user may again press the defrost button(s) to change their state.
+                                    */
+                id: rearDefrostTimer;
+		interval: 5000;
+                running: false;
+                repeat: false;
+                onTriggered:{
+
+                    switch (rearDefTimerState) {
+
+
+                        case "rearDef": {                                // Re-enable rear defrost button; turn off timer; erase switch state.
+                            MouseArea.visible = true;
+                            rearDefTimerState: rearDefTimerState = " "
+                            rearDefrostTimer.running = false;
+
+                        } default: break
+
+                    }
+                }
+
+            }
+
+            onClicked: {        // When Pressed, activate rear Defrost. Deactivate user input for 3s. (current CAN signals require this)
+
+                if (rearDefTimerState !== "rearDef") {            // Determine if timer is already running. If not, change state and send CAN message.
+                    rearDefrostButtonEffect.visible = !rearDefrostButtonEffect.visible
+                    AC_Controls.DefrostR(rearDefrostButtonEffect.visible)
+
+                // Activate timer, disable button
+                    rearDefTimerState: rearDefTimerState = "rearDef"
+                    MouseArea.visible = false;
+                    rearDefrostTimer.running = true;
+                }
+
+            }
+        }
+
+
+        MouseArea {
+            id: frontDefrost
+            x: 496
+            y: 164
+            width: 85
+            height: 77
+
+            Timer {
+                  /* Timer limiting on/off frequency of Front defrost. Current CAN signals require a min 3 second delay. The button is disabled during this time-
+                     frame. Once the delay has expired, user may again press the defrost button(s) to change their state. */
+
+                id: frontDefrostTimer;
+		interval: 5000;
+                running: false;
+                repeat: false;
+                onTriggered:{
+
+                    switch (frontDefTimerState) {
+
+
+                        case "frontDef": {                                 // Re-enable rear defrost button; turn off timer; erase switch state.
+                            MouseArea.visible = true;
+                            // frontDefrostTimer.running = false;
+                            frontDefTimerState: frontDefTimerState = " "
+
+                        } default: break
+                    }
+                }
+
+            }
+
+	    Image {
+		id: frontDefrostButtonEffect
+  visible: false
+		anchors.fill: parent
+		source: "UIPictures/ProofOfConcept/AC_ButtonEffect.png"
+	    }
+
+            onPressed: {        // When Pressed, activate front Defrost. Deactivate user input for 3ms. (current CAN signals require this)
+
+                if (frontDefTimerState !== "frontDef") {            // Determine if timer is already running. If not, change state and send CAN message.
+		    frontDefrostButtonEffect.visible = !frontDefrostButtonEffect.visible
+                    AC_Controls.DefrostF(frontDefrostButtonEffect.visible)
+
+                    // Activate timer, disable button
+                    frontDefTimerState: frontDefTimerState = "frontDef"
+                    MouseArea.visible = false;
+                    frontDefrostTimer.running = true;
+                }
+
+            }
+
+        }
+
+
+
+
+    }
+
+

@@ -1,0 +1,235 @@
+import QtQuick 1.0
+
+Image{
+    id:homePic
+    x: 0
+    y: 0
+    z: -1
+    opacity: 1
+    source: "UIPictures/pict"
+    property int series: 1//series counter
+    property int parallel:1//parallel counter
+    property int bev:1//serial and parallel counter
+    Connections{
+        target: CanControl
+        onVeh_mode_recieved:{
+            //var t = 0
+            text1.text = veh_mode;
+            if(veh_mode == 0){
+                text1.text = "off"
+                //engineGlow.opacity = 0
+                //battGlow.opacity = 0
+                if(bevTimer.running){
+                    bevTimer.stop()
+                }
+                if(parTimer.running){
+                    parTimer.stop()
+                }
+                if(seriesTimer.running){
+                    seriesTimer.stop()
+                }
+            }
+            if(veh_mode == 1){
+                text1.text = "Series Mode"
+                if(bevTimer.running){
+                    bevTimer.stop()
+                }
+                if(parTimer.running){
+                    parTimer.stop()
+                }
+                seriesTimer.start()
+                //engineGlow.opacity = 1
+                //battGlow.opacity = 1
+            }
+            else if(veh_mode == 2){
+                text1.text = "Parallel Mode"
+                if(bevTimer.running){
+                    bevTimer.stop()
+                }
+                if(seriesTimer.running){
+                    seriesTimer.stop()
+                }
+                parTimer.start()
+                //engineGlow.opacity = 1
+                //battGlow.opacity = 0
+            }
+            else if(veh_mode == 3 ){
+                text1.text = "BEV Mode"
+                if(parTimer.running){
+                    parTimer.stop()
+                }
+                if(seriesTimer.running){
+                    seriesTimer.stop()
+                }
+                bevTimer.start()
+                //engineGlow.opacity = 0
+                //battGlow.opacity = 1
+            }
+            console.log("veh_mode")
+        }
+    }
+    Image{
+        id: engineGlow
+        x:353
+        y:119
+        z: 1
+        opacity: 0
+        source: "UIPictures/engineGlow.png"
+    }
+    Image{
+        id:backFlow
+        x: 590
+        y: 60
+        z: 0
+        opacity: 0
+        source:"UIPictures/backflow.png"
+    }
+    Image{
+        id: frontWheel
+        x: 332
+        y: 54
+        z: 0
+        opacity: 0
+        source:"UIPictures/frontwheel.png"
+    }
+    Image{
+        id: battGlow
+        x: 515
+        y: 116
+        opacity:0
+        source:"UIPictures/batterglow.png"
+    }
+    Text {
+        id: text1
+        x: 92
+        y: 152
+        width: 141
+        height: 24
+        text: qsTr("Mode")
+        horizontalAlignment: Text.AlignHCenter
+        font.bold: false
+        font.family: "DejaVu Sans Mono"
+        font.pixelSize: 20
+    }
+    //this is used for testing
+    MouseArea{
+        id:testMouse
+        x: 0
+        y: 0
+        width: 100
+        height: 100
+        onClicked: {
+            CanControl.testing()
+        }
+    }
+    //end testing
+    //this section is do the animation for series mode.
+    Timer{
+        id: seriesTimer;
+        interval:1000;
+        running:false;
+        repeat:true;
+        onTriggered:{
+            if(series==1){
+                frontWheel.opacity = 1
+                engineGlow.opacity = 0
+                battGlow.opacity = 0
+                backFlow.opacity = 0
+            }
+            if(series==2){
+                frontWheel.opacity = 1
+                engineGlow.opacity = 1
+                battGlow.opacity = 0
+                backFlow.opacity = 0
+            }
+            if(series==3){
+                frontWheel.opacity = 1
+                engineGlow.opacity = 1
+                battGlow.opacity = 1
+                backFlow.opacity = 0
+            }
+            if(series==4){
+                frontWheel.opacity = 1
+                engineGlow.opacity = 1
+                battGlow.opacity = 1
+                backFlow.opacity = 1
+            }
+            if(series==5){
+                frontWheel.opacity = 0
+                engineGlow.opacity = 0
+                battGlow.opacity = 0
+                backFlow.opacity = 0
+            }
+            series = series+1
+            if(series>5){
+                series=1
+            }
+        }
+    }
+    //this timer is used to do the animation for parallel mode
+    Timer{
+        id: parTimer;
+        interval:1000;
+        running:false;
+        repeat:true;
+        onTriggered:{
+            if(parallel==1){
+                frontWheel.opacity = 1
+                engineGlow.opacity = 0
+                backFlow.opacity = 0
+            }
+            if(parallel==2){
+                frontWheel.opacity = 1
+                engineGlow.opacity = 1
+                backFlow.opacity = 0
+            }
+            if(parallel==3){
+                frontWheel.opacity = 1
+                engineGlow.opacity = 1
+                backFlow.opacity = 1
+            }
+            if(parallel==4){
+                frontWheel.opacity = 0
+                engineGlow.opacity = 0
+                backFlow.opacity = 0
+            }
+            parallel = parallel+1
+            if(parallel>4){
+                parallel=1
+            }
+        }
+    }
+//this section is used to do the animation for battery electric mode
+    Timer{
+        id: bevTimer;
+        interval:1000;
+        running:false;
+        repeat:true;
+        onTriggered:{
+            if(bev==1){
+                frontWheel.opacity = 1
+                battGlow.opacity = 0
+                backFlow.opacity = 0
+            }
+            if(bev==2){
+                frontWheel.opacity = 1
+                battGlow.opacity = 1
+                backFlow.opacity = 0
+            }
+            if(bev==3){
+                frontWheel.opacity = 1
+                battGlow.opacity = 1
+                backFlow.opacity = 1
+            }
+            if(bev==4){
+                frontWheel.opacity = 0
+                battGlow.opacity = 0
+                backFlow.opacity = 0
+            }
+            bev = bev+1
+            if(bev>4){
+                bev=1
+            }
+        }
+    }
+}
