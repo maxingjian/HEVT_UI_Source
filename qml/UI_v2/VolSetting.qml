@@ -138,8 +138,10 @@ Image{
                 source: "UIPictures/Buttons/Volume Setting Buttons/bass_treble.png"
                 MouseArea {
                     id: rectMouse
-                    width: 30
-                    height: 30
+                    x: -11
+                    y: -12
+                    width: 41
+                    height: 42
                     //anchors.fill: parent
                     drag.target: rect
                     drag.axis: Drag.XAxis
@@ -178,8 +180,10 @@ Image{
                 source: "UIPictures/Buttons/Volume Setting Buttons/bass_treble.png"
                 MouseArea {
                     id: rectMouse2
-                    width: 30
-                    height: 30
+                    x: -10
+                    y: -10
+                    width: 40
+                    height: 40
                     //anchors.fill: parent
                     drag.target: rect3
                     drag.axis: Drag.XAxis
