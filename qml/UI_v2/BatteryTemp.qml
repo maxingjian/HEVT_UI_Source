@@ -350,7 +350,7 @@ Image{
 
 
     //Repeats every second to see if the mode has changed
-    Timer{
+    /*Timer{
         id: modeTimer
         interval: 1000;
         running: true;
@@ -367,7 +367,7 @@ Image{
             }
             else battPage.source="UIPictures/Buttons/Battery Pics/normalbattery.png"
             }
-        }
+        }*/
 
     //Battery Charge
     Rectangle {

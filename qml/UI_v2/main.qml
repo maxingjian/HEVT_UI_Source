@@ -80,7 +80,7 @@ Rectangle {
 
         Timer{
             id: diagnosticMsg
-            interval: 1000;
+            interval: 500;
             running: true;
             repeat: true;
             onTriggered: {
