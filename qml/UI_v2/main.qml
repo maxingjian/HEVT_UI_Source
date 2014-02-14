@@ -1,11 +1,11 @@
 import QtQuick 1.0
 //import "backGround"
 
-Rectangle {
+Rectangle{
     id: mainPage
     width: 800
     height: 480
-    color: "#00000000"
+    //color: "#00000000"
 
     // Bottom bar that is on all screens
     BackGround1 {
@@ -80,7 +80,7 @@ Rectangle {
 
         Timer{
             id: diagnosticMsg
-            interval: 500;
+            interval: 1000;
             running: true;
             repeat: true;
             onTriggered: {
@@ -201,16 +201,6 @@ Rectangle {
                 opacity: 0
                 z: 0
             }
-//            PropertyChanges {
-//                target: background1
-//                x: 0
-//                y: 277
-//                opacity: 1
-//                onEnergyButtonClicked:{mainPage.state ="energystate"}
-//                onRadioButtonClicked:{mainPage.state = "radiostate"}
-//                onAcButtonClicked:{mainPage.state = "acstate"}
-//                onBatteryButtonClicked:{mainPage.state ="batterystate"}
-//            }
         },
         State{
             name: "newacstate"
@@ -239,16 +229,6 @@ Rectangle {
                 opacity: 0
                 z: 0
             }
-//            PropertyChanges {
-//                target: background1
-//                x: 0
-//                y: 277
-//                opacity: 1
-//                onEnergyButtonClicked:{mainPage.state ="energystate"}
-//                onRadioButtonClicked:{mainPage.state = "radiostate"}
-//                onAcButtonClicked:{mainPage.state = ""}
-//                onBatteryButtonClicked:{mainPage.state ="batterystate"}
-//            }
         },
         State {
             name: "batterystate"
@@ -279,17 +259,6 @@ Rectangle {
                 opacity: 0
                 z: 0
             }
-
-//            PropertyChanges {
-//                target: background1
-//                x: 0
-//                y: 277
-//                opacity: 1
-//                onEnergyButtonClicked:{mainPage.state ="energystate"}
-//                onRadioButtonClicked:{mainPage.state = "radiostate"}
-//                onAcButtonClicked:{mainPage.state = "acstate"}
-//                onBatteryButtonClicked:{mainPage.state =""}
-//            }
         },
         State {
             name: "homestate"
@@ -318,16 +287,6 @@ Rectangle {
                 opacity: 0
                 z: 0
             }
-//            PropertyChanges {
-//                target: background1
-//                x: 0
-//                y: 277
-//                opacity: 1
-//                onEnergyButtonClicked:{mainPage.state =""}
-//                onRadioButtonClicked:{mainPage.state = "radiostate"}
-//                onAcButtonClicked:{mainPage.state = "acstate"}
-//                onBatteryButtonClicked:{mainPage.state ="batterystate"}
-//            }
         },
         State {
             name: "volSettingStage"
@@ -362,13 +321,6 @@ Rectangle {
                 opacity: 1
                 z: 1
             }
-//            PropertyChanges {
-//                target: volSettingButton
-//                x: 726
-//                y: 333
-//                width: 74
-//                height: 57
-//            }
         }
     ]
     Image{

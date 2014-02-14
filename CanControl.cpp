@@ -18,10 +18,10 @@ void CanControl::start_up(){
     QProcess::execute( str0 );
 }
 
-void CanControl::send(QString canMessageID, QString canMessageData){
+/*void CanControl::send(QString canMessageID, QString canMessageData){
     QProcess::execute("cansend can1 -i "+canMessageID+" "+canMessageData);
     qDebug() << "Sending diagnostic message";
-}
+}*/
 
 int* CanControl::recieve_b(QString canMessageID){
     int* data = new int[8];

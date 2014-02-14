@@ -21,7 +21,11 @@ public:
     Q_INVOKABLE explicit CanControl(QObject *parent = 0);
     Q_INVOKABLE void start_up();
     // send can message.  canMessageID is in decimal
-    Q_INVOKABLE void send(QString canMessageID, QString canMessageData);
+    Q_INVOKABLE void send(QString canMessageID, QString canMessageData){
+        QProcess::execute("cansend can1 -i "+canMessageID+" "+canMessageData);
+        qDebug() << "Sending diagnostic message";
+    }
+
     // blocking recieve. canMessageID is in decimal
     Q_INVOKABLE int* recieve_b(QString canMessageID);
     // non-blocking recieve. Start recieving in a new thread and return immidiately.
