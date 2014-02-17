@@ -1,6 +1,6 @@
 import QtQuick 1.0
 
-//Image{
+/*//Image{
 //    id: battPage
 //    x: 0
 //    y: 0
@@ -54,7 +54,7 @@ import QtQuick 1.0
 //        height: 51
 //        text: qsTr("Text")
 //        font.pixelSize: 20
-//    }
+//    }*/
 /*    Timer{
         id: startUpTimer
         interval: 500;
@@ -64,6 +64,7 @@ import QtQuick 1.0
             CanControl.recieve_nb("1638")
         }
     }*/
+/*
 //    MouseArea{
 //        id: textButton
 //        x: 179
@@ -75,7 +76,7 @@ import QtQuick 1.0
 //            //CanControl.testing();
 //         #define MasterModule I2C1   //CanTest.signalTest();
 //        }
-//    }
+//    }*/
 /*    Text {
         id: text2
         x: 434
@@ -345,12 +346,13 @@ Image{
     property string battRateTimer
     property string battTempTimer
     property int currentTemp: 40
-    property int prevTemp: 40
+    property int battTempOffset: 40
     property int temp: 40
+    property int timerValue: 0
 
 
     //Repeats every second to see if the mode has changed
-    Timer{
+    /*Timer{
         id: modeTimer
         interval: 1000;
         running: true;
@@ -367,7 +369,7 @@ Image{
             }
             else battPage.source="UIPictures/Buttons/Battery Pics/normalbattery.png"
             }
-        }
+        }*/
 
     //Battery Charge
     Rectangle {
@@ -450,7 +452,7 @@ Image{
         x:160
         y: 117
         width: 90
-        height: 226
+        height: 227
         border.width: 0;
         radius: 8
         rotation: 0
@@ -466,6 +468,36 @@ Image{
             }
         }
     }
+    Rectangle {
+        id: rectangle1Top
+        x:160
+        y:200
+        z: 3
+        width: 90
+        height: 5
+        color: "#000066"
+    }
+
+    Text{
+        id: textTimer
+        x: 170
+        y: 0
+        z: 1
+        width: 79
+        height: 42
+        text: timerValue
+        color: "white"
+        font.pixelSize: 30
+        Timer{
+            id: testTimer
+            interval: 1000;
+            running: true;
+            repeat: true;
+            onTriggered: {
+                timerValue = timerValue + 1;
+            }
+        }
+    }
 
     Text {
         id: text2
@@ -473,7 +505,7 @@ Image{
         y: 215
         width: 79
         height: 42
-        text: qsTr("52C")
+        text: currentTemp
         font.pixelSize: 30
         /*Timer{
             id: battTempTimer
@@ -481,14 +513,14 @@ Image{
             running: true;
             repeat: true;
             onTriggered: {
-                currentTemp = temp;
-                if(currentTemp < prevTemp){ //highest:130  lowest:300
-                    text2.y= 215+((currentTemp-prevTemp)/175);
-                    prevTemp = currentTemp;
+                currentTemp = bett_temp;
+                if(currentTemp < ){ //highest:130  lowest:300
+                    text2.y= 215+((currentTemp-battTempOffset)/175);
+                    battTempOffset = currentTemp;
                 }
-                else if(currentTmep > prevTemp){
-                    text2.y= 215-((currentTemp-prevTemp)/175);
-                    prevTemp = currentTemp;
+                else if(currentTmep > battTempOffset){
+                    text2.y= 215-((currentTemp-battTempOffset)/175);
+                    battTempOffset = currentTemp;
                 }
             }
         }*/
@@ -503,12 +535,20 @@ Image{
         height: 100
         onClicked: {
             currentTemp = currentTemp - 3;
-            if(currentTemp < prevTemp){ //COLD  highest:130  lowest:300
-                if(currentTemp < 100 ) {text2.y= 215 - ((currentTemp-prevTemp));}
+            if(currentTemp < battTempOffset){ //COLD  highest:130  lowest:300
+                if(currentTemp < 100 ) {
+                    text2.y= 215 - ((currentTemp-battTempOffset));
+                    rectangle1Top.y = text2.y;
+                    //battTempOffset = currentTemp;
+                }
                 text2.text = currentTemp;
             }
-            else if(currentTemp > prevTemp){ //HOT
-                if(currentTemp > 0) {text2.y= 215 - ((currentTemp-prevTemp));}
+            else if(currentTemp > battTempOffset){ //HOT
+                if(currentTemp > 0) {
+                    text2.y= 215 - ((currentTemp-battTempOffset));
+                    rectangle1Top.y = text2.y;
+                   // battTempOffset = currentTemp;
+                }
                 text2.text = currentTemp;
             }
         }
@@ -522,13 +562,15 @@ Image{
         height: 100
         onClicked: {
             currentTemp = currentTemp + 3;
-            if(currentTemp < prevTemp){ //COLD  highest:130  lowest:300
-                if(currentTemp < 100) {text2.y= 215 - ((currentTemp-prevTemp));}
+            if(currentTemp < battTempOffset){ //COLD  highest:130  lowest:300
+                if(currentTemp < 100) {text2.y= 215 - ((currentTemp-battTempOffset));}
                 text2.text = currentTemp;
+                rectangle1Top.y = text2.y;
             }
-            else if(currentTemp > prevTemp){ //HOT
-                if(currentTemp > 0) {text2.y= 215 - ((currentTemp-prevTemp));}
+            else if(currentTemp > battTempOffset){ //HOT
+                if(currentTemp > 0) {text2.y= 215 - ((currentTemp-battTempOffset));}
                 text2.text = currentTemp;
+                rectangle1Top.y = text2.y;
             }
         }
     }

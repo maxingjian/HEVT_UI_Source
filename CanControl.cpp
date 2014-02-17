@@ -18,9 +18,10 @@ void CanControl::start_up(){
     QProcess::execute( str0 );
 }
 
-void CanControl::send(QString canMessageID, QString canMessageData){
+/*void CanControl::send(QString canMessageID, QString canMessageData){
     QProcess::execute("cansend can1 -i "+canMessageID+" "+canMessageData);
-}
+    qDebug() << "Sending diagnostic message";
+}*/
 
 int* CanControl::recieve_b(QString canMessageID){
     int* data = new int[8];
@@ -62,7 +63,7 @@ void CanControl::recieve_nb(QString canMessageID){
     emit _can_recieve_start(canMessageID);
 }
 
-int find_low(int temp_value){
+/*int find_low(int temp_value){
     int store_temp;
     if (store_temp > temp_value){
         return temp_value;
@@ -88,7 +89,7 @@ int find_avg(int next_temp){
     number++;
     sum = sum + next_temp;
     return (sum/number);
-}
+}*/
 
 void CanControl::_message_ready(QString canMessageID, int *canMessageData){
 //    emit message_recieved(canMessageID, canMessageData);
@@ -96,10 +97,10 @@ void CanControl::_message_ready(QString canMessageID, int *canMessageData){
     emit batt_temp_recieved(QString::number(canMessageData[1]*0.5-40));
     emit batt_soc_recieved(QString::number(canMessageData[2]*0.5));
     emit batt_current_recieved(QString::number((canMessageData[3]*256+canMessageData[4])*0.025-1000));
-    int low = find_low(canMessageData[1]*0.5-40);
+   /* int low = find_low(canMessageData[1]*0.5-40);
     emit batt_low(QString::number(low));
     int high = find_high(canMessageData[1]*0.5-40);
     emit batt_high(QString::number(high));
     int average = find_avg(canMessageData[1]*0.5-40);
-    emit batt_avg(QString::number(average));
+    emit batt_avg(QString::number(average));*/
 }

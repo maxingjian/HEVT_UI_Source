@@ -61,9 +61,12 @@ public:
 
     }
 
+    // This function is not used/sends no can messages**
+    //********************Delete in future
     Q_INVOKABLE void ventButtons(const QString &ventButtonStatus) {
           qDebug() << "Vent Status:" << ventButtonStatus;
     }
+    //**************************************************
 
     Q_INVOKABLE void fanLevel(QString fanSpeed){
         QString str0;
@@ -75,8 +78,8 @@ public:
     Q_INVOKABLE void acTemp(QString acTempLeft, QString acTempRight){
         qDebug() << "Current AC Temp Left is set at: "+acTempLeft;       // Min: 60, Max: 80
         qDebug() << "Current AC Temp Right is set at: "+acTempRight;       // Min: 60, Max: 80
-        QString str1 = "cansend can1 -i 0x257 0x07 0xAE 0x02 0x"+acTempRight+" 0x0 0x0 0x0";
-        QString str0 = "cansend can1 -i 0x257 0x07 0xAE 0x01 0x"+acTempLeft +" 0x0 0x0 0x0";
+        QString str1 = "cansend can1 -i 0x251 0x07 0xAE 0x02 0x02 0x"+acTempRight+" 0x0 0x0 0x0";
+        QString str0 = "cansend can1 -i 0x251 0x07 0xAE 0x02 0x01 0x"+acTempLeft +" 0x0 0x0 0x0";
         QProcess::execute(str1);
         QProcess::execute(str0);
     }
@@ -88,13 +91,13 @@ public:
 
     Q_INVOKABLE void acFloorToggle(){
         qDebug() << "Floor fan toggles";
-        QString str1 = "cansend can1 -i 0x251 0x07 0xAE 0X04 0X40 0X40 0X0 0X0 0X0";
+        QString str1 = "cansend can1 -i 0x251 0x07 0xAE 0X04 0X80 0X80 0X0 0X0 0X0";
         QProcess::execute(str1);
     }
 
     Q_INVOKABLE void acFaceToggle(){
         qDebug() << "Face fan toggles";
-        QString str1 = "cansend can1 -i 0x251 0x07 0xAE 0X04 0X0 0X0 0X10 0X10 0X0";
+        QString str1 = "cansend can1 -i 0x251 0x07 0xAE 0X04 0X40 0X40 0X0 0X0 0X0";
         QProcess::execute(str1);
     }
 
