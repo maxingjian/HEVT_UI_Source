@@ -28,13 +28,16 @@ symbian:TARGET.CAPABILITY += NetworkServices
 # CONFIG += mobility
 # MOBILITY +=
 
+QT       += network
+
 # The .cpp file which was generated for your project. Feel free to hack it.
 SOURCES += main.cpp \
     CAN_Setup.cpp \
     AC_Controls.cpp \
     Radio_HeadUnit.cpp \
     CanRecieve.cpp \
-    CanControl.cpp
+    CanControl.cpp \
+    UDPServer.cpp
 
 # Please do not modify the following two lines. Required for deployment.
 include(qmlapplicationviewer/qmlapplicationviewer.pri)
@@ -48,7 +51,8 @@ HEADERS += \
     AC_Controls.h \
     Radio_HeadUnit.h \
     CanRecieve.h \
-    CanControl.h
+    CanControl.h \
+    UDPServer.h
 
 OTHER_FILES += \
     qml/UI_v2/BackGround.qml \

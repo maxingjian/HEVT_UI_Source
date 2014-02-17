@@ -9,6 +9,7 @@
 #include "Radio_HeadUnit.h"
 #include "CanControl.h"
 #include "CanRecieve.h"
+#include "UDPServer.h"
 
 /* main.cpp Information
         main.cpp - This file has been modified to accept the signals passed to CAN_Setup.h. The application path is set to the <homefolder>/qml/UI_v2/main.qml
@@ -43,6 +44,10 @@ int main(int argc, char *argv[])
 
     Radio_Unit radioUnit;
     view.rootContext()->setContextProperty("RadioUnit", &radioUnit);
+
+    UDPServer udpServer;
+    udpServer.initSocket(9090);
+    view.rootContext()->setContextProperty("UDPServer", &udpServer);
 
 
     view.setSource(QUrl::fromLocalFile(path));

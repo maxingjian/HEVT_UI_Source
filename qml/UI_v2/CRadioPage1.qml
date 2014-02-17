@@ -1,6 +1,7 @@
 import QtQuick 1.0
 
 Image{
+
     id: radioPage1
     x: 0
     y: 0
@@ -445,6 +446,50 @@ Image{
 
     // On button
     MouseArea {
+        //======== udp debugging=======
+        Connections{
+            target:UDPServer
+            onDataReady:{
+                console.log("datagram received")
+                if (datagram == 1){
+                    radioPowerTimerState: radioPowerTimerState = "on"
+                    radioPowerMessage: radioPowerMessage = "0x244 0x07 0xAE 0X01 0X10 0X10 0X0 0X0 0X0"
+                    radioOn.opacity = 1
+                    radioOff.opacity = 0
+                    radioSaveButton1.opacity = radioSaveOpacity1
+                    radioSaveButton2.opacity = radioSaveOpacity2
+                    radioSaveButton3.opacity = radioSaveOpacity3
+                    radioSaveButton4.opacity = radioSaveOpacity4
+                    radioSaveButton5.opacity = radioSaveOpacity5
+                    radioSaveButton6.opacity = radioSaveOpacity6
+                    fmPic.opacity = fmButtonOpacity
+                    amPic.opacity = amButtonOpacity
+                }
+                else if(datagram == 0){
+                    /* Determine current state of radio and send appropriate message onto CAN bus */
+                    radioPowerTimerState: radioPowerTimerState = "off"
+                    radioPowerMessage: radioPowerMessage = "0x244 0x07 0xAE 0X01 0X10 0X0 0X0 0X0 0X0"
+                    radioOn.opacity = 0
+                    radioOff.opacity = 1
+                    radioSaveButton1.opacity = 0
+                    radioSaveButton2.opacity = 0
+                    radioSaveButton3.opacity = 0
+                    radioSaveButton4.opacity = 0
+                    radioSaveButton5.opacity = 0
+                    radioSaveButton6.opacity = 0
+                    fmPic.opacity = 0
+                    amPic.opacity = 0
+                    // If the radio is scanning then turn off the scanner
+                    if (scan.opacity == 1)
+                    {
+                        scan.opacity = 0
+                        scanTimer.stop()
+                    }
+                }
+            }
+        }
+
+        //=============================
         id: mouseAreaRadioPoweron
         x: 13
         y: 78
