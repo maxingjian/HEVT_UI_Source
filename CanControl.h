@@ -22,8 +22,9 @@ public:
     Q_INVOKABLE void start_up();
     // send can message.  canMessageID is in decimal
     Q_INVOKABLE void send(QString canMessageID, QString canMessageData){
-        QProcess::execute("cansend can1 -i "+canMessageID+" "+canMessageData);
-        qDebug() << "Sending diagnostic message";
+        QString msg = "cansend can1 -i "+canMessageID+" "+canMessageData;
+        QProcess::execute(msg);
+        qDebug() << "Sending diagnostic message" << msg;
     }
 
     // blocking recieve. canMessageID is in decimal
