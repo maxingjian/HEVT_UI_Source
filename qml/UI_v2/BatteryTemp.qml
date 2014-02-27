@@ -348,7 +348,6 @@ Image{
     property int currentTemp: 40
     property int battTempOffset: 40
     property int temp: 40
-    property int timerValue: 0
 
 
     //Repeats every second to see if the mode has changed
@@ -478,27 +477,6 @@ Image{
         color: "#000066"
     }
 
-    Text{
-        id: textTimer
-        x: 170
-        y: 0
-        z: 1
-        width: 79
-        height: 42
-        text: timerValue
-        color: "white"
-        font.pixelSize: 30
-        Timer{
-            id: testTimer
-            interval: 1000;
-            running: true;
-            repeat: true;
-            onTriggered: {
-                timerValue = timerValue + 1;
-            }
-        }
-    }
-
     Text {
         id: text2
         x: 170
@@ -507,14 +485,14 @@ Image{
         height: 42
         text: currentTemp
         font.pixelSize: 30
-        /*Timer{
+        Timer{
             id: battTempTimer
             interval: 1000;
             running: true;
             repeat: true;
             onTriggered: {
                 currentTemp = bett_temp;
-                if(currentTemp < ){ //highest:130  lowest:300
+                if(currentTemp < 100){ //highest:130  lowest:300
                     text2.y= 215+((currentTemp-battTempOffset)/175);
                     battTempOffset = currentTemp;
                 }
@@ -523,10 +501,10 @@ Image{
                     battTempOffset = currentTemp;
                 }
             }
-        }*/
+        }
     }
 
-    //Testing Batt Temp
+    /*//Testing Batt Temp
     MouseArea{
         id: mouse1
         x: 0
@@ -573,9 +551,9 @@ Image{
                 rectangle1Top.y = text2.y;
             }
         }
-    }
+    }*/
 
-    //TEsting battery rate
+    /*//TEsting battery rate
     MouseArea{
         id: mouse3
         x: 200
@@ -593,5 +571,5 @@ Image{
                 battChargeRect.color="red";
             }
         }
-    }
+    }*/
 }
