@@ -171,7 +171,20 @@ Rectangle{
 
 /////////////////////////////////////////////////////////////////
 
+    // ----------------------------------------------------------
+    // For all of the states, an opacity of one allows the page
+    // to be visible if all other pages have an opacity of zero.
+    // Changing the z-value to one allows the user to click on
+    // the buttons of that page. Any page that has a lower
+    // z-value will have its buttons disabled.
+    // ----------------------------------------------------------
     states: [
+
+        //------------------------------------------------------
+        // The radiostate shows the user the cradiopage1 image,
+        // hides all other images and allows the user to click
+        // on the radio buttons.
+        //------------------------------------------------------
         State {
             name: "radiostate"
 
@@ -202,6 +215,12 @@ Rectangle{
                 z: 0
             }
         },
+
+        //------------------------------------------------------
+        // The newacstate shows the user the ac page and allows
+        // the user to click on the ac buttons. All other pages
+        // are not visible, and all other buttons are disabled.
+        //------------------------------------------------------
         State{
             name: "newacstate"
             PropertyChanges {
@@ -230,6 +249,12 @@ Rectangle{
                 z: 0
             }
         },
+
+        //------------------------------------------------------
+        // The batterystate shows the user the battery page. It
+        // Hides the other pages and disables buttons on other
+        // pages.
+        //------------------------------------------------------
         State {
             name: "batterystate"
             PropertyChanges {
