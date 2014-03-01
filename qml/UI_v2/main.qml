@@ -80,7 +80,7 @@ Rectangle{
 
         Timer{
             id: diagnosticMsg
-            interval: 1000;
+            interval: 750;
             running: true;
             repeat: true;
             onTriggered: {
@@ -285,6 +285,14 @@ Rectangle{
                 z: 0
             }
         },
+        
+        //-----------------------------------------------------
+        // The homestate shows the home page. It is the initial
+        // state for the system and shows the user the home
+        // page, while also allowing them to click them on the
+        // buttons that bring it to other states. It also 
+        // disables all buttons on other pages.
+        //-----------------------------------------------------
         State {
             name: "homestate"
             PropertyChanges {
@@ -313,6 +321,13 @@ Rectangle{
                 z: 0
             }
         },
+        
+        //----------------------------------------------------------
+        // The volSettingStage is the state where the user is able
+        // to control the bass, treble and fade levels in the car.
+        // Only the buttons on the page are accessible and all other
+        // buttons in the project are disabled.
+        //----------------------------------------------------------
         State {
             name: "volSettingStage"
             PropertyChanges {
@@ -348,6 +363,12 @@ Rectangle{
             }
         }
     ]
+
+    //----------------------------------------------------------
+    // Currently the usbActive image and usbButton mouse area
+    // only create a button that toggles from being lit to not
+    // being lit up when clicked.
+    //----------------------------------------------------------
     Image{
         id: usbActive
         x: 730
@@ -372,6 +393,16 @@ Rectangle{
             }
         }
     }
+
+    //-----------------------------------------------------------
+    // The bluetoothActive image and bluetoothButton mouse area
+    // create a bluetooth image that lights up or turns off when
+    // clicked.
+    //
+    // Future hopes for this button is to have them control if
+    // passengers in the car are able to use their phones to
+    // control the settings in the car as well.
+    //-----------------------------------------------------------
     Image{
         id: bluetoothActive
         x: 754

@@ -496,18 +496,18 @@ Image{
         width: 114
         height: 63
 
-//        Timer {
-//              /* This timer keeps the vehicle in 'diagnostics mode' by repeating the 'radio on' or 'radio off' can message in 3 second intervals. On boot,
-//                the timer will begin sending 'radio off' signals. When the user clicks the radio power button, the timer will toggle the radio-off / radio-on
-//                signal. */
-//            id: radioPowerTimer;
-//            interval: 3000;
-//            running: true;
-//            repeat: true;
-//            onTriggered:{
-//                RadioUnit.radioPwr(radioPowerMessage,radioPowerTimerState)  //send CAN message, along with Debug messsage declaring radio state (on/off)
-//            }
-//        }
+        Timer {
+              /* This timer keeps the vehicle in 'diagnostics mode' by repeating the 'radio on' or 'radio off' can message in 3 second intervals. On boot,
+                the timer will begin sending 'radio off' signals. When the user clicks the radio power button, the timer will toggle the radio-off / radio-on
+                signal. */
+            id: radioPowerTimer;
+            interval: 3000;
+            running: true;
+            repeat: true;
+            onTriggered:{
+                RadioUnit.radioPwr(radioPowerMessage,radioPowerTimerState)  //send CAN message, along with Debug messsage declaring radio state (on/off)
+            }
+        }
         onClicked: {  // Turn radio on or off, once button is asserted.
             /* Determine current state of radio and send appropriate message onto CAN bus */
                 radioPowerTimerState: radioPowerTimerState = "on"
