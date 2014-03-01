@@ -23,6 +23,7 @@ void CanRecieve::can_recieve(QString canMessageID){
     if(process->waitForFinished(5000)){
         QByteArray temp = process->readAll();
         QString message = QString(temp);
+        message = message.split("\n")[1];
         //============
         qDebug()<<"Message Recieved: "<< message << " (non-blocking)";
         //============
