@@ -307,7 +307,7 @@ Image{
     Connections{
         target: CanControl
         onVeh_mode_recieved:{
-            text1.text = veh_mode;
+            text1 = veh_mode;
         }
         onBatt_temp_recieved:{
             text2.text = bett_temp;
@@ -331,7 +331,6 @@ Image{
         running: true;
         repeat: false;
         onTriggered:{
-            text1 = parallel
             CanControl.recieve_nb("1638")
         }
     }

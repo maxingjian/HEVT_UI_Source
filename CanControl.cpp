@@ -109,7 +109,7 @@ void CanControl::_message_ready(QString canMessageID, int *canMessageData){
     emit veh_mode_recieved(operatingMode);
     emit batt_temp_recieved((int)(canMessageData[1]*0.5-40));
     emit batt_soc_recieved((int)(canMessageData[2]*0.5));
-    emit batt_current_recieved((int)((canMessageData[3]*256+canMessageData[4])*0.025-1000));
+    emit batt_current_recieved((int)((canMessageData[4]*256+canMessageData[3])*0.025-1000));
    /* int low = find_low(canMessageData[1]*0.5-40);
     emit batt_low(QString::number(low));
     int high = find_high(canMessageData[1]*0.5-40);

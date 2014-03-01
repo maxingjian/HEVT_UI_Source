@@ -24,7 +24,7 @@ public:
     Q_INVOKABLE void send(QString canMessageID, QString canMessageData){
         QString msg = "cansend can1 -i "+canMessageID+" "+canMessageData;
         QProcess::execute(msg);
-        qDebug() << "Sending diagnostic message" << msg;
+//        qDebug() << "Sending diagnostic message" << msg;
     }
 
     // blocking recieve. canMessageID is in decimal
