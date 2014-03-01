@@ -55,15 +55,6 @@ import QtQuick 1.0
 //        text: qsTr("Text")
 //        font.pixelSize: 20
 //    }*/
-/*    Timer{
-        id: startUpTimer
-        interval: 500;
-        running: true;
-        repeat: false;
-        onTriggered:{
-            CanControl.recieve_nb("1638")
-        }
-    }*/
 /*
 //    MouseArea{
 //        id: textButton
@@ -334,6 +325,16 @@ Image{
         //        void batt_current_recieved(QString batt_current);
 
         }
+    Timer{
+        id: startUpTimer
+        interval: 500;
+        running: true;
+        repeat: false;
+        onTriggered:{
+            text1 = parallel
+            CanControl.recieve_nb("1638")
+        }
+    }
 
     id: battPage
     x: 0
@@ -345,30 +346,40 @@ Image{
     property string battChargeTimer
     property string battRateTimer
     property string battTempTimer
+    property string text1
     property int currentTemp: 40
     property int battTempOffset: 40
-    property int temp: 40
+    //property int temp: 40
 
+    Image{
+        id: modePicture
+        x: 520
+        y: 25
+        z: 1
+    }
 
     //Repeats every second to see if the mode has changed
-    /*Timer{
+    Timer{
         id: modeTimer
         interval: 1000;
         running: true;
         repeat: true;
         onTriggered: {
-            if(text1 == series){
-                battPage.source= "UIPictures/Buttons/Battery Pics/series.png"
+            if(text1 == "SERIES"){
+                modePicture.source= "UIPictures/Buttons/Battery Pics/series.png"
+                modePicture.opacity = 1
             }
-            else if(text1 == parallel){
-                battPage.source= "UIPictures/Buttons/Battery Pics/Parallel.png"
+            else if(text1 == "PARALLEL"){
+                modePicture.source= "UIPictures/Buttons/Battery Pics/Parallel.png"
+                modePicture.opacity = 1
             }
-            else if(text1 == electric){
-                battPage.source= "UIPictures/Buttons/Battery Pics/electric.png"
+            else if(text1 == "ELECTRIC"){
+                modePicture.source= "UIPictures/Buttons/Battery Pics/electric.png"
+                modePicture.opacity = 1
             }
-            else battPage.source="UIPictures/Buttons/Battery Pics/normalbattery.png"
+            else modePicture.opacity = 0
             }
-        }*/
+        }
 
     //Battery Charge
     Rectangle {
