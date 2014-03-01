@@ -93,10 +93,23 @@ int find_avg(int next_temp){
 
 void CanControl::_message_ready(QString canMessageID, int *canMessageData){
 //    emit message_recieved(canMessageID, canMessageData);
-    emit veh_mode_recieved(QString::number(canMessageData[0]%16));
-    emit batt_temp_recieved(QString::number(canMessageData[1]*0.5-40));
-    emit batt_soc_recieved(QString::number(canMessageData[2]*0.5));
-    emit batt_current_recieved(QString::number((canMessageData[3]*256+canMessageData[4])*0.025-1000));
+    int vehicleState = canMessageData[0]/16;
+    int vehicleMode = canMessageData[0]%16;
+    qDebug()<<"vehicleState : "<<vehicleState <<"  vehicleMode: "<<vehicleMode;
+    QString operatingMode = "OFF";
+    if (vehicleState == 1){
+        operatingMode = "ELECTRIC";
+    }
+    else if (vehicleState == 2 && vehicleMode == 1){
+        operatingMode = "SERIES";
+    }
+    else if (vehicleState == 2 && vehicleMode == 2){
+        operatingMode = "PARALLEL";
+    }
+    emit veh_mode_recieved(operatingMode);
+    emit batt_temp_recieved((int)(canMessageData[1]*0.5-40));
+    emit batt_soc_recieved((int)(canMessageData[2]*0.5));
+    emit batt_current_recieved((int)((canMessageData[3]*256+canMessageData[4])*0.025-1000));
    /* int low = find_low(canMessageData[1]*0.5-40);
     emit batt_low(QString::number(low));
     int high = find_high(canMessageData[1]*0.5-40);

@@ -43,9 +43,9 @@ signals:
 //    void message_recieved(QString canMessageID, int *canMessageData);
 
     void veh_mode_recieved(QString veh_mode);
-    void batt_temp_recieved(QString bett_temp);
-    void batt_soc_recieved(QString batt_soc);
-    void batt_current_recieved(QString batt_current);
+    void batt_temp_recieved(int bett_temp);
+    void batt_soc_recieved(int batt_soc);
+    void batt_current_recieved(int batt_current);
     void batt_avg(QString batt_avg);
     void batt_low(QString batt_low);
     void batt_high(QString batt_high);
