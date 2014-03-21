@@ -354,6 +354,8 @@ Image{
         id: modePicture
         x: 520
         y: 25
+        width: 0
+        height: 0
         z: 1
     }
 
