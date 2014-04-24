@@ -9,6 +9,7 @@ CanControl::CanControl(QObject *parent):
     connect (_canRecieve,SIGNAL(message_ready(QString,int*)),this,SLOT(_message_ready(QString,int*)));
     _canRecieve->moveToThread(_recieveThread);
     _recieveThread->start();
+    txSocket = new QUdpSocket(this);
 }
 void CanControl::start_up(){
     QString str0 = "canconfig can0 bitrate 500000";
@@ -93,8 +94,8 @@ int find_avg(int next_temp){
 
 void CanControl::_message_ready(QString canMessageID, int *canMessageData){
 //    emit message_recieved(canMessageID, canMessageData);
-    int vehicleState = canMessageData[0]/16;
-    int vehicleMode = canMessageData[0]%16;
+    int vehicleState = canMessageData[0]%16;
+    int vehicleMode = canMessageData[0]/16;
     qDebug()<<"vehicleState : "<<vehicleState <<"  vehicleMode: "<<vehicleMode;
     QString operatingMode = "OFF";
     if (vehicleState == 1){
@@ -110,6 +111,15 @@ void CanControl::_message_ready(QString canMessageID, int *canMessageData){
     emit batt_temp_recieved((int)(canMessageData[1]*0.5-40));
     emit batt_soc_recieved((int)(canMessageData[2]*0.5));
     emit batt_current_recieved((int)((canMessageData[4]*256+canMessageData[3])*0.025-1000));
+
+    // write to UDP
+    QHostAddress ip("10.0.0.1");
+    QByteArray datagram;
+    datagram.append(0x03);
+    for (int i = 0; i < 5; i++) {
+        datagram.append(canMessageData[i]);
+    }
+    txSocket->writeDatagram(datagram,datagram.size(),ip,5000);
    /* int low = find_low(canMessageData[1]*0.5-40);
     emit batt_low(QString::number(low));
     int high = find_high(canMessageData[1]*0.5-40);

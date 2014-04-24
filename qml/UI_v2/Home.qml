@@ -6,7 +6,6 @@ Rectangle{
     width: 800
     height: 480
     color: "#00000000"
-
     Image{
         id:homePic
         x: 0

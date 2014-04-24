@@ -11,7 +11,7 @@
 #include <QThread>
 #include <QDebug>
 #include "CanRecieve.h"
-
+#include "UDPServer.h"
 
 
 class CanControl : public QObject
@@ -60,6 +60,7 @@ signals:
 private:
     CanRecieve* _canRecieve;
     QThread* _recieveThread;
+    QUdpSocket* txSocket;
 
 private slots:
     // private slot to recieve message ready signal from CanRecieve.

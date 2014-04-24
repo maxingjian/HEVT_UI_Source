@@ -36,6 +36,7 @@ Image{
     property string midState                                                        // Timer trigger variable for volume up / down
     property string trebleState                                                     // Timer trigger variable for volume up / down
     property string bugMessage: volumeLevel					    // Debug message transport
+
     //end of variable initialization
 
 
@@ -96,159 +97,6 @@ Image{
 //
 // As of right now we cannot read the actual FM stations so we cannot save those stations.
 // So right now these buttons just light up but do not actually do anything
-    MouseArea{
-        id: radioSaveM1
-        x:290
-        y:285
-        width: 80
-        height: 72
-        onClicked: {
-            if(radioPowerTimerState == "on")
-            {
-                radioSaveButton1.opacity = 1
-                radioSaveButton2.opacity = 0
-                radioSaveButton3.opacity = 0
-                radioSaveButton4.opacity = 0
-                radioSaveButton5.opacity = 0
-                radioSaveButton6.opacity = 0
-
-                radioSaveOpacity1       = radioSaveButton1.opacity
-                radioSaveOpacity2       = radioSaveButton2.opacity
-                radioSaveOpacity3       = radioSaveButton3.opacity
-                radioSaveOpacity4       = radioSaveButton4.opacity
-                radioSaveOpacity5       = radioSaveButton5.opacity
-                radioSaveOpacity6       = radioSaveButton6.opacity
-            }
-        }
-
-    }
-    MouseArea{
-        id: radioSaveM2
-        x:370
-        y:285
-        width: 80
-        height: 72
-        onClicked: {
-            if(radioPowerTimerState == "on")
-            {
-                radioSaveButton1.opacity = 0
-                radioSaveButton2.opacity = 1
-                radioSaveButton3.opacity = 0
-                radioSaveButton4.opacity = 0
-                radioSaveButton5.opacity = 0
-                radioSaveButton6.opacity = 0
-
-                radioSaveOpacity1       = radioSaveButton1.opacity
-                radioSaveOpacity2       = radioSaveButton2.opacity
-                radioSaveOpacity3       = radioSaveButton3.opacity
-                radioSaveOpacity4       = radioSaveButton4.opacity
-                radioSaveOpacity5       = radioSaveButton5.opacity
-                radioSaveOpacity6       = radioSaveButton6.opacity
-            }
-        }
-    }
-    MouseArea{
-        id: radioSaveM3
-        x:450
-        y:285
-        width: 80
-        height: 72
-        onClicked: {
-            if(radioPowerTimerState == "on")
-            {
-                radioSaveButton1.opacity = 0
-                radioSaveButton2.opacity = 0
-                radioSaveButton3.opacity = 1
-                radioSaveButton4.opacity = 0
-                radioSaveButton5.opacity = 0
-                radioSaveButton6.opacity = 0
-
-                radioSaveOpacity1       = radioSaveButton1.opacity
-                radioSaveOpacity2       = radioSaveButton2.opacity
-                radioSaveOpacity3       = radioSaveButton3.opacity
-                radioSaveOpacity4       = radioSaveButton4.opacity
-                radioSaveOpacity5       = radioSaveButton5.opacity
-                radioSaveOpacity6       = radioSaveButton6.opacity
-            }
-        }
-    }
-    MouseArea{
-        id: radioSaveM4
-        x:530
-        y:285
-        width: 80
-        height: 72
-        onClicked: {
-            if(radioPowerTimerState == "on")
-            {
-                radioSaveButton1.opacity = 0
-                radioSaveButton2.opacity = 0
-                radioSaveButton3.opacity = 0
-                radioSaveButton4.opacity = 1
-                radioSaveButton5.opacity = 0
-                radioSaveButton6.opacity = 0
-
-                radioSaveOpacity1       = radioSaveButton1.opacity
-                radioSaveOpacity2       = radioSaveButton2.opacity
-                radioSaveOpacity3       = radioSaveButton3.opacity
-                radioSaveOpacity4       = radioSaveButton4.opacity
-                radioSaveOpacity5       = radioSaveButton5.opacity
-                radioSaveOpacity6       = radioSaveButton6.opacity
-            }
-        }
-    }
-    MouseArea{
-        id: radioSaveM5
-        x:610
-        y:285
-        width: 80
-        height: 72
-        onClicked: {
-            if(radioPowerTimerState == "on")
-            {
-                radioSaveButton1.opacity = 0
-                radioSaveButton2.opacity = 0
-                radioSaveButton3.opacity = 0
-                radioSaveButton4.opacity = 0
-                radioSaveButton5.opacity = 1
-                radioSaveButton6.opacity = 0
-
-                radioSaveOpacity1       = radioSaveButton1.opacity
-                radioSaveOpacity2       = radioSaveButton2.opacity
-                radioSaveOpacity3       = radioSaveButton3.opacity
-                radioSaveOpacity4       = radioSaveButton4.opacity
-                radioSaveOpacity5       = radioSaveButton5.opacity
-                radioSaveOpacity6       = radioSaveButton6.opacity
-            }
-        }
-    }
-        MouseArea{
-            id: radioSaveM6
-            x:690
-            y:285
-            width: 80
-            height: 72
-
-            onClicked: {
-                if(radioPowerTimerState == "on")
-                {
-                    radioSaveButton1.opacity = 0
-                    radioSaveButton2.opacity = 0
-                    radioSaveButton3.opacity = 0
-                    radioSaveButton4.opacity = 0
-                    radioSaveButton5.opacity = 0
-                    radioSaveButton6.opacity = 1
-
-                    radioSaveOpacity1       = radioSaveButton1.opacity
-                    radioSaveOpacity2       = radioSaveButton2.opacity
-                    radioSaveOpacity3       = radioSaveButton3.opacity
-                    radioSaveOpacity4       = radioSaveButton4.opacity
-                    radioSaveOpacity5       = radioSaveButton5.opacity
-                    radioSaveOpacity6       = radioSaveButton6.opacity
-                }
-            }
-
-    }
 
     Image{
         id: scan
@@ -975,33 +823,6 @@ MouseArea {
         }
     }
 }
-
-MouseArea {
-    id: mouseAreaSeekLeft1
-    x: 411
-    y: 215
-    width: 173
-    height: 32
-    onClicked: {   // When Seek Left(down) button pressed, decrement current radio station channel
-        busMessage:busMessage = "0x244 0x07 0xAE 0X05 0X40 0X0 0X02 0X0 0X0"
-        keypressed:keypressed = "Seek Down"
-        RadioUnit.radioBus(busMessage, keypressed)  // Send CAN message onto bus
-    }
-}
-
-MouseArea {
-    id: mouseAreaSeekRight1
-    x: 584
-    y: 215
-    width: 184
-    height: 32
-
-    onClicked: {   // When Seek Right(up) button pressed, increment current radio station channel
-        busMessage:busMessage = "0x244 0x07 0xAE 0X05 0X40 0X0 0X01 0X0 0X0"
-        keypressed:keypressed = "Seek Up"
-        RadioUnit.radioBus(busMessage, keypressed)  // Send CAN message onto bus
-    }
-}
 Image{
     id: volSettingPic
     x: 618
@@ -1010,34 +831,152 @@ Image{
     source: "UIPictures/Buttons/Radio Buttons/settingsactive.png"
 }
 
-
-MouseArea{
-    id: mouseAreavoSettingPic
-    x: 730
-    y: 380
-    width: 63
-    height: 63
-    onPressed: {
-        volSettingPic.opacity = 1;
+//this code is written for drag inside of the car image, mainly taking care of the
+//fade and balance sound control in the vehicle.
+Image{
+    id: ball
+    x:600
+    y:166
+    width: 110
+    height: 110
+    sourceSize.height: 170
+    sourceSize.width: 170
+    //x: 430
+    //y: 66
+    opacity: 1
+    source:"UIPictures/Buttons/Volume Setting Buttons/volume_ball.png"
+    MouseArea{
+        id:fadeBalance
+        x: 0
+        y: 0
+        width: 110
+        height: 110
+        drag.target:parent
+        drag.axis:Drag.XandYAxis
     }
-    onReleased: {
-        volSettingPic.opacity = 0;
-        volSettingPage.opacity = 1;
-        radioPage1.opacity = 0;
-        volSettingPage.z = 1;
-        radioPage1.z = 0;
+    onXChanged: {
+//            if (fadeBalance.drag.active) {
+//                console.log("x=" + x)
+//            }
+        //these code is to make sure that the x axis does not get outside of the outline of
+        //the car in the x axis
+        if(x<570){
+            x = 570
+        }
+        if(x>625){
+            x = 625
+        }
+        fadeLevel =(x-570)*255/55;
+//            console.log("fade = " +fadeLevel);
+        busMessage = "0x244 0x07 0xAE 0X03 0X0 0X0 0X80 0x"+AC_Controls.convert(fadeLevel)+" 0X0"        // Create CAN message
+        keypressed = "fade"  // Debug Message
+        RadioUnit.radioBus(busMessage, keypressed) // Send CAN message onto bus
+    }
+    onYChanged: {
+//            if (fadeBalance.drag.active) {
+//              console.log("y=" + y)
+//            }
+        //these code is to make sure that the y axis does not get outside of the outline of
+        //the car in the y axis
+        if(y<60){
+            y = 60
+        }
+        if(y>280){
+            y=280
+        }
+        balanceLevel = (280-y)*255/220;
+//            console.log("balance = " +balanceLevel);
+        busMessage = "0x244 0x07 0xAE 0X03 0X0 0X0 0X40 0X0 0x"+AC_Controls.convert(balanceLevel)        // Create CAN message
+        keypressed = "Balance"  // Debug Message
+        RadioUnit.radioBus(busMessage, keypressed) // Send CAN message onto bus
     }
 }
+//this is used for bass
+    Rectangle {
+        id: container
+        x: 250
+        y: 191
+        width: 194; height: 20
+        color: "transparent"
+        rotation: 270
+        Rectangle{
+            id: rect1
+            x: 0
+            y: 8
+            width:60; height:2
+            color:"#987098"
+        }
+        Image {
+            id: rect
+            x:60
+            y: 0
+            source: "UIPictures/Buttons/Volume Setting Buttons/bass_treble.png"
+            MouseArea {
+                id: rectMouse
+                x: -10
+                y: -10
+                width: 40
+                height: 40
+                //anchors.fill: parent
+                drag.target: rect
+                drag.axis: Drag.XAxis
+                drag.minimumX: 0
+                drag.maximumX: container.width-rect.width
+            }
+            onXChanged: {
+                rect1.width = x;
+                //console.log("height = "+ x/(container.width-rect.width))
+                bassLevel = x/(container.width-rect.width)*255
+                //console.log("basslevel = "+bassLevel)
+                busMessage = "0x244 0x07 0xAE 0X04 0X80 0x"+AC_Controls.convert(bassLevel)+" 0X0 0X0 0x0"        // Create CAN message
+                keypressed = "bass"  // Debug Message
+                RadioUnit.radioBus(busMessage, keypressed) // Send CAN message onto bus
+            }
+        }
+    }
+    //this container is used for treble
+    Rectangle {
+        id: trebleContainer
+        x: 390
+        y: 191
+        width:194; height:20
+        color: "transparent"
+        rotation: 270
+        Rectangle{
+            id: rect2
+            x: 0
+            y: 8
+            width:60; height:2
+            color:"#987098"
+        }
+        Image {
+            id: rect3
+            x:60
+            source: "UIPictures/Buttons/Volume Setting Buttons/bass_treble.png"
+            MouseArea {
+                id: rectMouse2
+                x: -10
+                y: -10
+                width: 40
+                height: 40
+                //anchors.fill: parent
+                drag.target: rect3
+                drag.axis: Drag.XAxis
+                drag.minimumX: 0
+                drag.maximumX: trebleContainer.width-rect3.width
+            }
+            onXChanged: {
+                rect2.width = x;
+                //console.log("treble = "+ x)
+                trebleLevel = x/(trebleContainer.width-rect3.width)*255
+                //console.log("basslevel = "+AC_Controls.convert(trebleLevel))
+                busMessage = "0x244 0x07 0xAE 0X04 0X20 0x0 0x0 0x"+AC_Controls.convert(trebleLevel)+" 0X0"        // Create CAN message
+                keypressed = "treble"  // Debug Message
+                RadioUnit.radioBus(busMessage, keypressed) // Send CAN message onto bus
+            }
+        }
+    }
 
 
-Text {
-    id: radioDisplay
-    x: 430
-    y: 160
-    width: 213
-    height: 73
-    text: qsTr("Station")
-    font.pixelSize: 60
-}
 
 }

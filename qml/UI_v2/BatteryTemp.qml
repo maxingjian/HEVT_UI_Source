@@ -1,308 +1,5 @@
 import QtQuick 1.0
 
-/*//Image{
-//    id: battPage
-//    x: 0
-//    y: 0
-//    z: -1
-//    opacity: 1
-//    source:"UIPictures/Battery Pics/normalbattery.png"
-//    property int socAngle: 0
-//    property int battTempAngle: 0
-//    property int battCurAngle: 0
-//    property int hokieFlag:1
-
-//    Connections{
-//      target: CanControl
-//        onVeh_mode_recieved:{
-//            target: energyPic
-//            text1.text = veh_mode;
-//            console.log("veh_mode")
-//        }
-//        onBatt_temp_recieved:{
-//            text2.text = bett_temp;
-//        }
-//        onBatt_soc_recieved:{
-//           text3.text = batt_soc;
-//        }
-//       onBatt_current_recieved:{
-//            text4.text = batt_current;
-//            CanControl.recieve_nb("1638")
-//        }
-        //        void veh_mode_recieved(QString veh_mode);
-        //        void batt_temp_recieved(QString bett_temp);
-        //        void batt_soc_recieved(QString batt_soc);
-        //        void batt_current_recieved(QString batt_current);
-
-        //            target: CanTest
-        //            onTestChanged:{
-        //                text1.text = number;
-        //                console.log("signal",number)
-        //        //    onImageChanged: console.log("Image has changed!")
-        //            }
-        //            onSignalChanged:{
-        //                text2.text = number;
-        //                console.log("2nd signal",number)
-        //            }
-//        }
-
-//    Text {
-//        id: text1
-//        x: 150
-//        y: 233
-//        width: 91
-//        height: 51
-//        text: qsTr("Text")
-//        font.pixelSize: 20
-//    }*/
-/*
-//    MouseArea{
-//        id: textButton
-//        x: 179
-//        y: 142
-//        width: 172
-//        height: 46
-//        onClicked: {
-//            CanControl.recieve_nb("1638")
-//            //CanControl.testing();
-//         #define MasterModule I2C1   //CanTest.signalTest();
-//        }
-//    }*/
-/*    Text {
-        id: text2
-        x: 434
-        y: 130
-        width: 79
-        height: 42
-        text: qsTr("Temperature")
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 20
-    }
-    MouseArea{
-        id: text2Button
-        x:256 //define MasterModule I2C1#define MasterModule I2C1
-        y:254
-        width: 94
-        height: 30
-        onClicked: {
-            CanTest.signalTest2();
-        }
-    }
-
-    Text {
-        id: text3
-        x: 219
-        y: 60
-        width: 79
-        height: 42
-        text: qsTr("SOC")
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 20
-    }
-    MouseArea{
-        id: text3Button
-        x:413
-        y:182
-        width: 131
-        height: 36
-        onClicked: {
-        }
-    }
-
-    Text {
-        id: text4
-        x: 271
-        y: 210
-        width: 79
-        height: 42
-        text: qsTr("Current")
-        horizontalAlignment: Text.AlignHCenter
-        font.pixelSize: 20
-    }
-    //this is the implementation of a needle
-    Image{
-        id: socNeedle
-        x: 232
-        y: 46
-        height: 105
-        rotation: 0
-        opacity: 1
-        source:"UIPictures/needle.png"
-        transformOrigin: Item.Bottom
-    }
-    MouseArea{
-        id:needButton
-        x: 0
-        y: 0
-        width: 100
-        height: 100
-        opacity: 1
-        onClicked:{
-            socAngle = socAngle + 10
-            socNeedle.rotation = socAngle
-        }
-    }
-    Image{
-        id: battTemp
-        x: 447
-        y: 99
-        rotation: 0
-        opacity: 0
-        source:"UIPictures/needle.png"
-        transformOrigin: Item.Bottom
-    }
-    Image{
-        id:battCurrent
-        x: 286
-        y: 182
-        width: 42
-        height: 97
-        rotation: 0
-        opacity: 0
-        source:"UIPictures/needle.png"
-        transformOrigin: Item.Bottom
-    }
-    Image{
-        id: hokie1
-        x: 704
-        y: 243
-        opacity: 0
-        source:"UIPictures/print1.png"
-    }
-    Image{
-        id: hokie2
-        x: 733
-        y: 175
-        opacity: 0
-        source:"UIPictures/print2.png"
-    }
-    Image{
-        id: hokie3
-        x: 671
-        y: 150
-        opacity: 0
-        source:"UIPictures/print3.png"
-    }
-    Image{
-        id: hokie4
-        x: 692
-        y: 72
-        opacity: 0
-        source:"UIPictures/print4.png"
-    }
-    Image{
-        id: hokie5
-        x: 611
-        y: 60
-        opacity: 0
-        source:"UIPictures/print5.png"
-    }
-    Image{
-        id: hokie6
-        x: 631
-        y: 3
-        opacity: 0
-        source:"UIPictures/print6.png"
-    }
-    Image{
-        id: hokie7
-        x: 531
-        y: 4
-        opacity: 0
-        source:"UIPictures/print7.png"
-    }
-
-    //this section takes care of the hokie prints that shows on the screen, hokieprints are tied to a hokiePrintTimer
-    //it interrupts at the interval time specified, and display glowing hokie prints one by one
-
-    Timer{
-        id: hokiePrintTimer;
-        interval:1000;
-        running:true;
-        repeat:true;
-        onTriggered:{
-          //  console.log("hokie timer")
-            if(hokieFlag==1){
-                hokie1.opacity=1
-                hokie2.opacity=0
-                hokie3.opacity=0
-                hokie4.opacity=0
-                hokie5.opacity=0
-                hokie6.opacity=0
-                hokie7.opacity=0
-            }
-            else if(hokieFlag==2){
-                hokie1.opacity=1
-                hokie2.opacity=1
-                hokie3.opacity=0
-                hokie4.opacity=0
-                hokie5.opacity=0
-                hokie6.opacity=0
-                hokie7.opacity=0
-            }
-            else if(hokieFlag==3){
-                hokie1.opacity=1
-                hokie2.opacity=1
-                hokie3.opacity=1
-                hokie4.opacity=0
-                hokie5.opacity=0
-                hokie6.opacity=0
-                hokie7.opacity=0
-            }
-            else if(hokieFlag==4){
-                hokie1.opacity=1
-                hokie2.opacity=1
-                hokie3.opacity=1
-                hokie4.opacity=1
-                hokie5.opacity=0
-                hokie6.opacity=0
-                hokie7.opacity=0
-            }
-            else if(hokieFlag==5){
-                hokie1.opacity=1
-                hokie2.opacity=1
-                hokie3.opacity=1
-                hokie4.opacity=1
-                hokie5.opacity=1
-                hokie6.opacity=0
-                hokie7.opacity=0
-            }
-            else if(hokieFlag==6){
-                hokie1.opacity=1
-                hokie2.opacity=1
-                hokie3.opacity=1
-                hokie4.opacity=1
-                hokie5.opacity=1
-                hokie6.opacity=1
-                hokie7.opacity=0
-            }
-            else if(hokieFlag==7){
-                hokie1.opacity=1
-                hokie2.opacity=1
-                hokie3.opacity=1
-                hokie4.opacity=1
-                hokie5.opacity=1
-                hokie6.opacity=1
-                hokie7.opacity=1
-            }
-            else if(hokieFlag==8){
-                hokie1.opacity=0
-                hokie2.opacity=0
-                hokie3.opacity=0
-                hokie4.opacity=0
-                hokie5.opacity=0
-                hokie6.opacity=0
-                hokie7.opacity=0
-            }
-            hokieFlag = hokieFlag+1
-            if(hokieFlag>8){
-                hokieFlag=1
-            }
-        }
-    }
-}*/
-
-
 Image{
     Connections{
         target: CanControl
@@ -311,6 +8,7 @@ Image{
         }
         onBatt_temp_recieved:{
             text2.text = bett_temp;
+            currentTemp = bett_temp;
         }
         onBatt_soc_recieved:{
             text3.text = batt_soc;
@@ -319,10 +17,6 @@ Image{
             text4.text = batt_current;
             CanControl.recieve_nb("1638")
         }
-        //        void veh_mode_recieved(QString veh_mode);
-        //        void batt_temp_recieved(QString bett_temp);
-        //        void batt_soc_recieved(QString batt_soc);
-        //        void batt_current_recieved(QString batt_current);
 
         }
     Timer{
@@ -340,6 +34,7 @@ Image{
     y: 0
     z: -1
     opacity: 1
+    scale: 1
     source:"UIPictures/Home Screens/normalbattery.png"
     property string modeTimer
     property string battChargeTimer
@@ -348,14 +43,16 @@ Image{
     property string text1
     property int currentTemp: 40
     property int battTempOffset: 40
-    //property int temp: 40
+    property int colorConversion: 0
+    property int battColor: 0xD000D0
+//    property int timerCount: 0
 
     Image{
         id: modePicture
         x: 520
         y: 25
-        width: 0
-        height: 0
+       // width: 0
+        //height: 0
         z: 1
     }
 
@@ -390,17 +87,31 @@ Image{
         height: 225
         x: 34
         y: 118
+        z: 3
         border.color: "white";
         border.width: 0;
         radius: 8
     }
+//    Text {
+//        id: timerCounter
+//        x: 0
+//        y: 400
+//        z: 4
+//        width: 50
+//        height: 50
+//        color: "white"
+//        text: timerCount
+//    }
+
     Text {
         id: text3
         x: 42
         y: 140
+        z: 3
         width: 79
         height: 42
         text: qsTr("100")
+        color: "white"
         font.pixelSize: 30
         Timer{
             id: battChargeTimer
@@ -418,6 +129,19 @@ Image{
         }
     }
 
+    Text{
+        id: socSign
+        x: 100
+        y: 142
+        z: 3
+        width: 10
+        height: 42
+        color: "white"
+        text: "%"
+        font.pixelSize: 28
+    }
+
+
     //Battery Rate
     Rectangle {
         id: battRateRect
@@ -426,6 +150,7 @@ Image{
         height: 225
         x: 280
         y: 118
+        z: 3
         border.color: "white";
         border.width: 0;
         radius: 8
@@ -434,12 +159,13 @@ Image{
 
     Text {
         id: text4
-        x: 288
+        x: 286
         y: 140
+        z: 3
         width: 79
         height: 42
-        text: qsTr("100%")
-        //horizontalAlignment: Text.AlignHCenter
+        color: "white"
+        text: qsTr("100")
         font.pixelSize: 30
         Timer{
             id: battRateTimer
@@ -457,6 +183,29 @@ Image{
         }
     }
 
+    Text{
+        id: currentUnits
+        x: 347
+        y: 142
+        z: 3
+        width: 10
+        height: 42
+        color: "white"
+        text: "A"
+        font.pixelSize: 28
+    }
+
+    Rectangle{
+        id: tempCoverage
+        x: 160
+        y: 117
+        z: 2
+        width: 90
+        height: 154.36 - 1.816*currentTemp
+        color: "gray"
+        opacity: 0.75
+    }
+
     //Battery Temp
     Rectangle {
         id: rectangle1
@@ -467,35 +216,30 @@ Image{
         border.width: 0;
         radius: 8
         rotation: 0
-        gradient: Gradient {
-            GradientStop {
-                position: 0
-                color: "#d54545"
-            }
-
-            GradientStop {
-                position: 1
-                color: "#7c79e6"
-            }
-        }
+        color: "#"+AC_Controls.convert(battColor)
     }
-    Rectangle {
-        id: rectangle1Top
-        x:160
-        y:200
-        z: 3
-        width: 90
-        height: 5
-        color: "#000066"
+
+    Text {
+        id: tempUnits
+        x: 213
+        y: 140
+        z: 4
+        width: 20
+        height: 42
+        color: "white"
+        text: '\xB0' + "C"
+        font.pixelSize: 30
     }
 
     Text {
         id: text2
-        x: 170
-        y: 215
+        x: 165
+        y: 140
+        z: 3
         width: 79
         height: 42
         text: currentTemp
+        color: "white"
         font.pixelSize: 30
         Timer{
             id: battTempTimer
@@ -503,21 +247,38 @@ Image{
             running: true;
             repeat: true;
             onTriggered: {
-                currentTemp = bett_temp;
-                if(currentTemp < 100){ //highest:130  lowest:300
-                    text2.y= 215+((currentTemp-battTempOffset)/175);
-                    battTempOffset = currentTemp;
+//                timerCount = timerCount + 1;
+//                currentTemp = bett_temp;
+//                text2.text = currentTemp;
+                if (currentTemp < 42){ // This will be making it more blue
+                    colorConversion = currentTemp + battTempOffset;
+                    colorConversion = colorConversion/4.4286;
+                    battColor = 0x0000D0;
+                    while (colorConversion > 1){
+                        battColor = battColor + 0x100000;
+                        colorConversion = colorConversion - 1;
+                    }
+                    rectangle1.color = "#"+AC_Controls.convert(battColor);
                 }
-                else if(currentTmep > battTempOffset){
-                    text2.y= 215-((currentTemp-battTempOffset)/175);
-                    battTempOffset = currentTemp;
+                else if (currentTemp > 42){ // This will be making it more red
+                    //battColor = 0xD00000;
+                    colorConversion = currentTemp + battTempOffset;
+                    colorConversion = colorConversion/4.4286;
+                    battColor = 0xD00000;
+                    while(colorConversion < 32){
+                        battColor = battColor + 0x000010;
+                        colorConversion = colorConversion + 1;
+                    }
+                    rectangle1.color = "#"+AC_Controls.convert(battColor);
                 }
+                else // 23deg C is purple
+                    rectangle1.color = "#D000D0";
             }
         }
     }
 
-    /*//Testing Batt Temp
-    MouseArea{
+    //Testing Batt Temp
+    /*MouseArea{
         id: mouse1
         x: 0
         y: 0
@@ -525,26 +286,37 @@ Image{
         height: 100
         onClicked: {
             currentTemp = currentTemp - 3;
-            if(currentTemp < battTempOffset){ //COLD  highest:130  lowest:300
-                if(currentTemp < 100 ) {
-                    text2.y= 215 - ((currentTemp-battTempOffset));
-                    rectangle1Top.y = text2.y;
-                    //battTempOffset = currentTemp;
+            if (currentTemp < -40)
+                currentTemp = -40;
+            else if (currentTemp > 85)
+                currentTemp = 85;
+            text2.text = currentTemp;
+            if (currentTemp < 42){ // This will be making it more blue
+                colorConversion = currentTemp + battTempOffset;
+                colorConversion = colorConversion/4.4286;
+                battColor = 0x0000D0;
+                while (colorConversion > 1){
+                    battColor = battColor + 0x100000;
+                    colorConversion = colorConversion - 1;
                 }
-                text2.text = currentTemp;
+                rectangle1.color = "#"+AC_Controls.convert(battColor);
             }
-            else if(currentTemp > battTempOffset){ //HOT
-                if(currentTemp > 0) {
-                    text2.y= 215 - ((currentTemp-battTempOffset));
-                    rectangle1Top.y = text2.y;
-                   // battTempOffset = currentTemp;
+            else if (currentTemp > 42){ // This will be making it more red
+                colorConversion = currentTemp + battTempOffset;
+                colorConversion = colorConversion/4.4286;
+                battColor = 0xD00000;
+                while(colorConversion < 32){
+                    battColor = battColor + 0x000010;
+                    colorConversion = colorConversion + 1;
                 }
-                text2.text = currentTemp;
+                rectangle1.color = "#"+AC_Controls.convert(battColor);
             }
+            else // 23deg C is purple
+                rectangle1.color = "#D000D0";
         }
-    }
+    }*/
 
-    MouseArea{
+    /*MouseArea{
         id: mouse2
         x: 100
         y: 0
@@ -552,36 +324,33 @@ Image{
         height: 100
         onClicked: {
             currentTemp = currentTemp + 3;
-            if(currentTemp < battTempOffset){ //COLD  highest:130  lowest:300
-                if(currentTemp < 100) {text2.y= 215 - ((currentTemp-battTempOffset));}
-                text2.text = currentTemp;
-                rectangle1Top.y = text2.y;
+            if (currentTemp < -40)
+                currentTemp = -40;
+            else if (currentTemp > 85)
+                currentTemp = 85;
+            text2.text = currentTemp;
+            if (currentTemp < 42){ // This will be making it more blue
+                colorConversion = currentTemp + battTempOffset;
+                colorConversion = colorConversion/4.4286;
+                battColor = 0x0000D0;
+                while (colorConversion > 1){
+                    battColor = battColor + 0x100000;
+                    colorConversion = colorConversion - 1;
+                }
+                rectangle1.color = "#"+AC_Controls.convert(battColor);
             }
-            else if(currentTemp > battTempOffset){ //HOT
-                if(currentTemp > 0) {text2.y= 215 - ((currentTemp-battTempOffset));}
-                text2.text = currentTemp;
-                rectangle1Top.y = text2.y;
+            else if (currentTemp > 42){ // This will be making it more red
+                colorConversion = currentTemp + battTempOffset;
+                colorConversion = colorConversion/4.4286;
+                battColor = 0xD00000;
+                while(colorConversion < 32){
+                    battColor = battColor + 0x000010;
+                    colorConversion = colorConversion + 1;
+                }
+                rectangle1.color = "#"+AC_Controls.convert(battColor);
             }
-        }
-    }*/
-
-    /*//TEsting battery rate
-    MouseArea{
-        id: mouse3
-        x: 200
-        y: 0
-        width: 100
-        height: 100
-        onClicked: {
-            if(text3.text > 0)
-                text3.text = text3.text-10;
-
-            if(text3.text<= 40 && text3.text >= 20){
-                battChargeRect.color="yellow";
-            }
-            else if(text3.text < 20){
-                battChargeRect.color="red";
-            }
+            else // 43deg C is purple
+                rectangle1.color = "#D000D0";
         }
     }*/
 }

@@ -5,7 +5,9 @@ Rectangle{
     id: mainPage
     width: 800
     height: 480
-    //color: "#00000000"
+    //scale: 0.5
+    transform: Scale{origin.x: 0; origin.y: 0;xScale: 0.8}
+    transformOrigin: Item.TopLeft
 
     // Bottom bar that is on all screens
     BackGround1 {
