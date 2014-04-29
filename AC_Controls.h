@@ -61,13 +61,6 @@ public:
 
     }
 
-    // This function is not used/sends no can messages**
-    //********************Delete in future
-    Q_INVOKABLE void ventButtons(const QString &ventButtonStatus) {
-          qDebug() << "Vent Status:" << ventButtonStatus;
-    }
-    //**************************************************
-
     Q_INVOKABLE void fanLevel(QString fanSpeed){
         QString str0;
         qDebug() << "Current Fan Level:" + fanSpeed;       // Min: 0, off position. Max: 100, full On position
