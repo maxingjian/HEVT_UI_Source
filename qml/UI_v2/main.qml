@@ -5,7 +5,6 @@ Rectangle{
     id: mainPage
     width: 800
     height: 480
-    //scale: 0.5
     transform: Scale{origin.x: 0; origin.y: 0;xScale: 0.8}
     transformOrigin: Item.TopLeft
 
@@ -367,68 +366,51 @@ Rectangle{
     ]
 
     //----------------------------------------------------------
-    // Currently the usbActive image and usbButton mouse area
-    // only create a button that toggles from being lit to not
-    // being lit up when clicked.
+    // The wifiCover image is added to the main screen to cover
+    // the bluetooth and usb images that are on the background
+    // image.
     //----------------------------------------------------------
     Image{
-        id: usbActive
-        x: 730
+        id: wifiCover
+        x: 690
         y: 448
         z: 2
-        opacity: 0
-        source:"UIPictures/Home Screens/usbactive.png"
-    }
-    MouseArea{
-        id: usbButton
-        x: 732
-        y: 440
-        height: 32
-        width: 20
-        onClicked: {
-            CanTest.signalTest();
-            if(usbActive.opacity == 1){
-                usbActive.opacity = 0
-            }
-            else{
-                usbActive.opacity = 1
-            }
-        }
+        source: "UIPictures/Home Screens/wifiOff.png"
     }
 
-    //-----------------------------------------------------------
-    // The bluetoothActive image and bluetoothButton mouse area
-    // create a bluetooth image that lights up or turns off when
-    // clicked.
-    //
-    // Future hopes for this button is to have them control if
-    // passengers in the car are able to use their phones to
-    // control the settings in the car as well.
-    //-----------------------------------------------------------
+    //----------------------------------------------------------
+    // The wifiActive image is instantiated with an opacity of 0
+    // when the changeWifiStatus mouse area is clicked, its
+    // opacity will change from 0 to 1 or vice versa. The wifi
+    // image is then illuminated and shows the user that wifi is
+    // on.
+    //----------------------------------------------------------
     Image{
-        id: bluetoothActive
-        x: 754
+        id: wifiActive
+        x: 679
         y: 448
         z: 2
         opacity: 0
-        source:"UIPictures/Home Screens/bluetoothactive.png"
+        source: "UIPictures/Home Screens/wifiOn.png"
     }
+    // Created to be larger than the image
     MouseArea{
-        id: bluetoothButton
-        x: 756
-        y: 440
-        height: 32
-        width: 20
-        onClicked: {
-            CanTest.signalTest();
-            if(bluetoothActive.opacity == 1){
-                bluetoothActive.opacity = 0
-            }
-            else{
-                bluetoothActive.opacity = 1
-            }
-        }
+        id: changeWifiStatus
+        x: 730
+        y: 430
+        width: 70
+        height: 60
+        z: 2
+        onClicked:
+            if (wifiActive.opacity==0)
+                wifiActive.opacity = 1;
+            else
+                wifiActive.opacity = 0;
     }
+
+    // ------------------------------------------------
+    // Items for the volume slider below
+    // ------------------------------------------------
 
     //Create solid navy rectangle that is behind slider
     Rectangle {
