@@ -16,7 +16,7 @@ Image{
     Image{
         id: acCirculate
         x: 351
-        y: 92
+        y: 91
         opacity: 0
         source:"UIPictures/Buttons/Air Buttons/circulateactive.png"
     }
@@ -49,7 +49,7 @@ Image{
     Image{
         id: rearDefrost
         x: 253
-        y: 73
+        y: 72
         opacity: 0
         source: "UIPictures/Buttons/Air Buttons/defrostactive.png"
     }
@@ -74,7 +74,7 @@ Image{
     Image{
         id: acOn
         x: 253
-        y: 123
+        y: 122
         opacity: 0
         source: "UIPictures/Buttons/Air Buttons/acactive.png"
     }
@@ -99,7 +99,7 @@ Image{
     Image{
         id: frontDefrost
         x: 247
-        y: 193
+        y: 192
         opacity: 0
         source: "UIPictures/Buttons/Air Buttons/frontdefrostactive.png"
     }
