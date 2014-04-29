@@ -100,9 +100,14 @@
              GradientStop { position: 0.0; color: "lightgray" }
              GradientStop { position: 1.0; color: "gray" }
          }
+
          MouseArea {
              id: mouse
-             anchors.fill: parent; drag.target: parent
+             x: -8
+             y: -8
+             width: slider.height+12
+             height: slider.height+12
+             drag.target: parent
              drag.axis:{
                  if(mode == 1 || mode == 3){
                     Drag.XAxis; //Makes it only possible to drag horizontally
