@@ -25,7 +25,7 @@ Image{
         running: true;
         repeat: false;
         onTriggered:{
-            CanControl.recieve_nb("1638")
+            //CanControl.recieve_nb("1638")
         }
     }
 
@@ -45,7 +45,6 @@ Image{
     property int battTempOffset: 40
     property int colorConversion: 0
     property int battColor: 0xD000D0
-//    property int timerCount: 0
 
     Image{
         id: modePicture
@@ -92,16 +91,6 @@ Image{
         border.width: 0;
         radius: 8
     }
-//    Text {
-//        id: timerCounter
-//        x: 0
-//        y: 400
-//        z: 4
-//        width: 50
-//        height: 50
-//        color: "white"
-//        text: timerCount
-//    }
 
     Text {
         id: text3
@@ -247,9 +236,6 @@ Image{
             running: true;
             repeat: true;
             onTriggered: {
-//                timerCount = timerCount + 1;
-//                currentTemp = bett_temp;
-//                text2.text = currentTemp;
                 if (currentTemp < 42){ // This will be making it more blue
                     colorConversion = currentTemp + battTempOffset;
                     colorConversion = colorConversion/4.4286;
@@ -276,81 +262,4 @@ Image{
             }
         }
     }
-
-    //Testing Batt Temp
-    /*MouseArea{
-        id: mouse1
-        x: 0
-        y: 0
-        width: 100
-        height: 100
-        onClicked: {
-            currentTemp = currentTemp - 3;
-            if (currentTemp < -40)
-                currentTemp = -40;
-            else if (currentTemp > 85)
-                currentTemp = 85;
-            text2.text = currentTemp;
-            if (currentTemp < 42){ // This will be making it more blue
-                colorConversion = currentTemp + battTempOffset;
-                colorConversion = colorConversion/4.4286;
-                battColor = 0x0000D0;
-                while (colorConversion > 1){
-                    battColor = battColor + 0x100000;
-                    colorConversion = colorConversion - 1;
-                }
-                rectangle1.color = "#"+AC_Controls.convert(battColor);
-            }
-            else if (currentTemp > 42){ // This will be making it more red
-                colorConversion = currentTemp + battTempOffset;
-                colorConversion = colorConversion/4.4286;
-                battColor = 0xD00000;
-                while(colorConversion < 32){
-                    battColor = battColor + 0x000010;
-                    colorConversion = colorConversion + 1;
-                }
-                rectangle1.color = "#"+AC_Controls.convert(battColor);
-            }
-            else // 23deg C is purple
-                rectangle1.color = "#D000D0";
-        }
-    }*/
-
-    /*MouseArea{
-        id: mouse2
-        x: 100
-        y: 0
-        width: 100
-        height: 100
-        onClicked: {
-            currentTemp = currentTemp + 3;
-            if (currentTemp < -40)
-                currentTemp = -40;
-            else if (currentTemp > 85)
-                currentTemp = 85;
-            text2.text = currentTemp;
-            if (currentTemp < 42){ // This will be making it more blue
-                colorConversion = currentTemp + battTempOffset;
-                colorConversion = colorConversion/4.4286;
-                battColor = 0x0000D0;
-                while (colorConversion > 1){
-                    battColor = battColor + 0x100000;
-                    colorConversion = colorConversion - 1;
-                }
-                rectangle1.color = "#"+AC_Controls.convert(battColor);
-            }
-            else if (currentTemp > 42){ // This will be making it more red
-                colorConversion = currentTemp + battTempOffset;
-                colorConversion = colorConversion/4.4286;
-                battColor = 0xD00000;
-                while(colorConversion < 32){
-                    battColor = battColor + 0x000010;
-                    colorConversion = colorConversion + 1;
-                }
-                rectangle1.color = "#"+AC_Controls.convert(battColor);
-            }
-            else // 43deg C is purple
-                rectangle1.color = "#D000D0";
-        }
-    }*/
 }
