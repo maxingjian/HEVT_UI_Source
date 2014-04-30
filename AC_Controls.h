@@ -68,12 +68,15 @@ public:
         QProcess::execute(str0);
     }
 
-    Q_INVOKABLE void acTemp(QString acTempLeft, QString acTempRight){
-        qDebug() << "Current AC Temp Left is set at: "+acTempLeft;       // Min: 60, Max: 80
+    Q_INVOKABLE void acTempRight(QString acTempRight){
         qDebug() << "Current AC Temp Right is set at: "+acTempRight;       // Min: 60, Max: 80
         QString str1 = "cansend can1 -i 0x251 0x07 0xAE 0x02 0x02 0x"+acTempRight+" 0x0 0x0 0x0";
-        QString str0 = "cansend can1 -i 0x251 0x07 0xAE 0x02 0x01 0x"+acTempLeft +" 0x0 0x0 0x0";
         QProcess::execute(str1);
+    }
+
+    Q_INVOKABLE void acTempLeft(QString acTempLeft){
+        qDebug() << "Current AC Temp Left is set at: "+acTempLeft;       // Min: 60, Max: 80
+        QString str0 = "cansend can1 -i 0x251 0x07 0xAE 0x02 0x01 0x"+acTempLeft +" 0x0 0x0 0x0";
         QProcess::execute(str0);
     }
 
