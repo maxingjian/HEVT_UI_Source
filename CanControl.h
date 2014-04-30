@@ -27,6 +27,12 @@ public:
 //        qDebug() << "Sending diagnostic message" << msg;
     }
 
+    Q_INVOKABLE void sendHighSpeed(QString canMessageID, QString canMessageData){
+        QString msg1 = "cansend can0 -i "+canMessageID+" "+canMessageData;
+        QProcess::execute(msg1);
+        qDebug() << "Sending message " << msg1;
+    }
+
     // blocking recieve. canMessageID is in decimal
     Q_INVOKABLE int* recieve_b(QString canMessageID);
     // non-blocking recieve. Start recieving in a new thread and return immidiately.

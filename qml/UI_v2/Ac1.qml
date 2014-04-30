@@ -5,6 +5,7 @@ Image{
     property string acText: "place"
     property string driverTemp: "4"
     property string passengerTemp: "4"
+    property string acSig
     id: acPage
     x: 0
     y: 0
@@ -93,6 +94,17 @@ Image{
                 acOn.opacity = 1
                 AC_Controls.acButton(true) //Toggles AC State with Button Effect and starts/stops CAN timer
             }
+        }
+    }
+
+    Timer{
+        id: acMsgTimer
+        interval: 500;
+        running: true;
+        repeat: true;
+        onTriggered:{
+            acSig = AC_Controls.convert(acOn.opacity);
+            CanControl.sendHighSpeed("0x667", acSig);
         }
     }
 
