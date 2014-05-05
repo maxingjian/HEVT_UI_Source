@@ -28,7 +28,7 @@ public:
     }
 
     Q_INVOKABLE void sendHighSpeed(QString canMessageID, QString canMessageData){
-        QString msg1 = "cansend can0 -i "+canMessageID+" "+canMessageData;
+        QString msg1 = "cansend can0 -i "+canMessageID+" 0x00 0x00 0x00 0x00 0x00 0x00 0x00 0x0"+canMessageData;
         QProcess::execute(msg1);
         qDebug() << "Sending message " << msg1;
     }
