@@ -133,17 +133,17 @@
                      fanLevelString = AC_Controls.convert(value)
                      AC_Controls.fanLevel(fanLevelString)
                  }else if (mode == 2){
-                     AC_Controls.acTemp(acPage.driverTemp,acPage.passengerTemp)
-                     acPage.driverTemp = (AC_Controls.convert(value))
-                     //AC_Controls.acTempLeft(AC_Controls.convert(value));
+                     //AC_Controls.acTemp(acPage.driverTemp,acPage.passengerTemp)
+                     //acPage.driverTemp = (AC_Controls.convert(value))
+                     AC_Controls.acTempLeft(AC_Controls.convert(value));
                  }else if (mode == 3){
                      busMessage:busMessage = "0x244 0x07 0xAE 0X01 0X40 0X0 0X0 0x"+AC_Controls.convert(value)+" 0X0"
                      RadioUnit.radioBus(busMessage, keypressed)
                      volumeLevel = value
                  }else{
-                     AC_Controls.acTemp(acPage.driverTemp,acPage.passengerTemp)
-                     acPage.passengerTemp = (AC_Controls.convert(value))
-                     //AC_Controls.acTempRight(AC_Controls.convert(value));
+                     //AC_Controls.acTemp(acPage.driverTemp,acPage.passengerTemp)
+                     //acPage.passengerTemp = (AC_Controls.convert(value))
+                     AC_Controls.acTempRight(AC_Controls.convert(value));
                  }
              }
          }
