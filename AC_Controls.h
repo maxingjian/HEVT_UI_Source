@@ -80,6 +80,15 @@ public:
         QProcess::execute(str0);
     }
 
+    Q_INVOKABLE void acTemp(QString acTempLeft, QString acTempRight){
+        qDebug() << "Current AC Temp Left is set at: "+acTempLeft;       // Min: 60, Max: 80
+        qDebug() << "Current AC Temp Right is set at: "+acTempRight;       // Min: 60, Max: 80
+        QString str1 = "cansend can1 -i 0x251 0x07 0xAE 0x02 0x02 0x"+acTempRight+" 0x0 0x0 0x0";
+        QString str0 = "cansend can1 -i 0x251 0x07 0xAE 0x02 0x01 0x"+acTempLeft +" 0x0 0x0 0x0";
+        QProcess::execute(str1);
+        QProcess::execute(str0);
+    }
+
     Q_INVOKABLE QString convert(int valueToConvert) {
         QString hexValue = QString::number(valueToConvert, 16);
         return hexValue;
