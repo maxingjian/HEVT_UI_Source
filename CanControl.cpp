@@ -110,7 +110,7 @@ void CanControl::_message_ready(QString canMessageID, int *canMessageData){
     else if (vehicleState == 3 && vehicleMode == 8){
         operatingMode = "CHARGING";
     }
-    else if (vehicleState == 3 && vehicleMode == 8){
+    else if (vehicleState == 3 && vehicleMode == 9){
         operatingMode = "CHARGED";
     }
     emit veh_mode_recieved(operatingMode);
