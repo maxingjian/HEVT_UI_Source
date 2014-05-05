@@ -107,6 +107,12 @@ void CanControl::_message_ready(QString canMessageID, int *canMessageData){
     else if (vehicleState == 2 && vehicleMode == 2){
         operatingMode = "PARALLEL";
     }
+    else if (vehicleState == 3 && vehicleMode == 8){
+        operatingMode = "CHARGING";
+    }
+    else if (vehicleState == 3 && vehicleMode == 8){
+        operatingMode = "CHARGED";
+    }
     emit veh_mode_recieved(operatingMode);
     emit batt_temp_recieved((int)(canMessageData[1]*0.5-40));
     emit batt_soc_recieved((int)(canMessageData[2]*0.5));

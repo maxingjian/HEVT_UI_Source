@@ -25,7 +25,7 @@ Image{
         running: true;
         repeat: false;
         onTriggered:{
-            //CanControl.recieve_nb("1638")
+            CanControl.recieve_nb("1638")
         }
     }
 
@@ -74,6 +74,15 @@ Image{
                 modePicture.source= "UIPictures/Buttons/Battery Pics/electric.png"
                 modePicture.opacity = 1
             }
+            else if (text1 == "CHARGING"){
+                modePicture.source= "UIPictures/Buttons/Battery Pics/charging.png"
+                modePicture.opacity = 1
+            }
+            else if (text1 == "CHARGED"){
+                modePicture.source= "UIPictures/Buttons/Battery Pics/full charged.png"
+                modePicture.opacity = 1
+            }
+
             else modePicture.opacity = 0
             }
         }

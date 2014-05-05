@@ -882,7 +882,7 @@ Image{
             y = 60
         }
         if(y>280){
-            y=280
+            y = 280
         }
         balanceLevel = (280-y)*255/220;
 //            console.log("balance = " +balanceLevel);

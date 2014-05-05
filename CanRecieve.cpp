@@ -27,7 +27,17 @@ void CanRecieve::can_recieve(QString canMessageID){
         //============
         qDebug()<<"Message Recieved: "<< message << " (non-blocking)";
         //============
-        if (message.split(" ")[1] != "[8]"
+        if (message == "") {
+            qDebug()<<"CAN interface is not supported";
+            for (int i = 0; i < 8; i++){
+                data[i]=0;
+            }
+            //============
+            qDebug()<<"Message Not Recieved: "<< canMessageID << " (non-blocking)";
+            //============
+            emit message_ready(canMessageID,data);
+        }
+        else if (message.split(" ")[1] != "[8]"
                 || message.split(":")[0].toInt(NULL,16) != canMessageID.toInt(NULL,10) ){ //wrong message
             for (int i = 0; i < 8; i++){
                 data[i]=-1;
