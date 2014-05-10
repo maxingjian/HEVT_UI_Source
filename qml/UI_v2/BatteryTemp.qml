@@ -48,8 +48,8 @@ Image{
 
     Image{
         id: modePicture
-        x: 520
-        y: 25
+        x: 531
+        y: 35
        // width: 0
         //height: 0
         z: 1
@@ -67,7 +67,7 @@ Image{
                 modePicture.opacity = 1
             }
             else if(text1 == "PARALLEL"){
-                modePicture.source= "UIPictures/Buttons/Battery Pics/Parallel.png"
+                modePicture.source= "UIPictures/Buttons/Battery Pics/parallel.png"
                 modePicture.opacity = 1
             }
             else if(text1 == "ELECTRIC"){
@@ -79,7 +79,7 @@ Image{
                 modePicture.opacity = 1
             }
             else if (text1 == "CHARGED"){
-                modePicture.source= "UIPictures/Buttons/Battery Pics/full charged.png"
+                modePicture.source= "UIPictures/Buttons/Battery Pics/charged.png"
                 modePicture.opacity = 1
             }
 

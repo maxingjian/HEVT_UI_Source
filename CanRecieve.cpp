@@ -33,7 +33,7 @@ void CanRecieve::can_recieve(QString canMessageID){
                 data[i]=0;
             }
             //============
-            qDebug()<<"Message Not Recieved: "<< canMessageID << " (non-blocking)";
+            qDebug()<<"Message Not Received: "<< canMessageID << " (non-blocking)";
             //============
             emit message_ready(canMessageID,data);
         }
@@ -59,7 +59,7 @@ void CanRecieve::can_recieve(QString canMessageID){
             data[i]=0;
         }
         //============
-        qDebug()<<"Message Not Recieved: "<< canMessageID << " (non-blocking)";
+        qDebug()<<"Message Not Received: "<< canMessageID << " (non-blocking)";
         //============
         emit message_ready(canMessageID,data);
     }

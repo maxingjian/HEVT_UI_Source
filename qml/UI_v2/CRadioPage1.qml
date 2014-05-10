@@ -854,24 +854,6 @@ Image{
         drag.target:parent
         drag.axis:Drag.XandYAxis
     }
-    onXChanged: {
-//            if (fadeBalance.drag.active) {
-//                console.log("x=" + x)
-//            }
-        //these code is to make sure that the x axis does not get outside of the outline of
-        //the car in the x axis
-        if(x<570){
-            x = 570
-        }
-        if(x>625){
-            x = 625
-        }
-        fadeLevel =(x-570)*255/55;
-//            console.log("fade = " +fadeLevel);
-        busMessage = "0x244 0x07 0xAE 0X03 0X0 0X0 0X80 0x"+AC_Controls.convert(fadeLevel)+" 0X0"        // Create CAN message
-        keypressed = "fade"  // Debug Message
-        RadioUnit.radioBus(busMessage, keypressed) // Send CAN message onto bus
-    }
     onYChanged: {
 //            if (fadeBalance.drag.active) {
 //              console.log("y=" + y)
@@ -884,7 +866,26 @@ Image{
         if(y>280){
             y = 280
         }
-        balanceLevel = (280-y)*255/220;
+        fadeLevel = (y-60)*255/220;
+//            console.log("fade = " +fadeLevel);
+        busMessage = "0x244 0x07 0xAE 0X03 0X0 0X0 0X80 0x"+AC_Controls.convert(fadeLevel)+" 0X0"        // Create CAN message
+        keypressed = "fade"  // Debug Message
+        RadioUnit.radioBus(busMessage, keypressed) // Send CAN message onto bus
+    }
+    onXChanged: {
+//            if (fadeBalance.drag.active) {
+//                console.log("x=" + x)
+//            }
+        //these code is to make sure that the x axis does not get outside of the outline of
+        //the car in the x axis
+        if(x<570){
+            x = 570
+        }
+        if(x>625){
+            x = 625
+        }
+        balanceLevel =(x-570)*255/55;
+
 //            console.log("balance = " +balanceLevel);
         busMessage = "0x244 0x07 0xAE 0X03 0X0 0X0 0X40 0X0 0x"+AC_Controls.convert(balanceLevel)        // Create CAN message
         keypressed = "Balance"  // Debug Message

@@ -42,6 +42,8 @@ public:
         emit veh_mode_recieved("1");
     }
 
+    Q_INVOKABLE void wifi_connect();
+
     //end testing
 
 signals:

@@ -19,6 +19,15 @@ void CanControl::start_up(){
     QProcess::execute( str0 );
 }
 
+void CanControl::wifi_connect() {
+
+    QProcess *process = new QProcess();
+    process->setProcessChannelMode(QProcess::MergedChannels);
+    QStringList arguments;
+    arguments << "-c" << "~/./wifiConnect";
+    process->start("/bin/bash", arguments);
+}
+
 /*void CanControl::send(QString canMessageID, QString canMessageData){
     QProcess::execute("cansend can1 -i "+canMessageID+" "+canMessageData);
     qDebug() << "Sending diagnostic message";
@@ -119,7 +128,7 @@ void CanControl::_message_ready(QString canMessageID, int *canMessageData){
     emit batt_current_recieved((int)((canMessageData[4]*256+canMessageData[3])*0.025-1000));
 
     // write to UDP
-    QHostAddress ip("10.0.0.1");
+    QHostAddress ip("192.168.42.1");
     QByteArray datagram;
     datagram.append(0x03);
     for (int i = 0; i < 5; i++) {

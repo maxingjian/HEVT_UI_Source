@@ -401,11 +401,17 @@ Rectangle{
         width: 70
         height: 60
         z: 2
-        onClicked:
-            if (wifiActive.opacity==0)
-                wifiActive.opacity = 1;
-            else
-                wifiActive.opacity = 0;
+        onPressed:
+//            if (wifiActive.opacity==0)
+//                wifiActive.opacity = 1;
+//            else
+//                wifiActive.opacity = 0;
+            wifiActive.opacity = 1
+        onReleased:{
+            wifiActive.opacity = 0
+            CanControl.wifi_connect();
+        }
+
     }
 
     // ------------------------------------------------
